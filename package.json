@@ -1,12 +1,12 @@
 {
-  "name": "Backend",
+  "name": "backend",
   "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --loader ts-node/esm src/index.ts",
+    "dev": "nodemon --watch src --ext ts --exec \"node --loader ts-node/esm src/index.ts\"",
     "start": "node dist/index.js",
     "build": "tsc",
     "db:generate": "prisma generate --no-engine",
@@ -20,14 +20,63 @@
   "packageManager": "pnpm@10.13.1",
   "dependencies": {
     "@prisma/client": "^6.16.3",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.9",
     "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.6.2",
+    "cookie-parser": "^1.4.7",
     "prisma": "^6.16.3",
     "ts-node": "^10.9.2",
     "ts-node-esm": "^0.0.6",
     "typescript": "^5.9.3"
+  },
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Resources": {
+    "Api": {
+      "Type": "AWS::Serverless::Api",
+      "Properties": {
+        "Name": {
+          "Fn::Sub": [
+            "${ResourceName} From Stack ${AWS::StackName}",
+            {
+              "ResourceName": "Api"
+            }
+          ]
+        },
+        "StageName": "Prod",
+        "DefinitionBody": {
+          "openapi": "3.0",
+          "info": {},
+          "paths": {
+            "/": {
+              "get": {
+                "responses": {}
+              }
+            }
+          }
+        },
+        "EndpointConfiguration": "REGIONAL",
+        "TracingEnabled": true
+      }
+    },
+    "UserPool": {
+      "Type": "AWS::Cognito::UserPool",
+      "Properties": {
+        "AdminCreateUserConfig": {
+          "AllowAdminCreateUserOnly": false
+        },
+        "AliasAttributes": [
+          "email",
+          "preferred_username"
+        ],
+        "UserPoolName": {
+          "Fn::Sub": "${AWS::StackName}-UserPool"
+        }
+      }
+    }
   }
 }
