@@ -20,15 +20,18 @@
   "packageManager": "pnpm@10.13.1",
   "dependencies": {
     "@prisma/client": "^6.16.3",
+    "argon2": "^0.44.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
+    "@types/argon2": "^0.15.4",
     "@types/cookie-parser": "^1.4.9",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.6.2",
     "cookie-parser": "^1.4.7",
+    "nodemon": "^3.1.10",
     "prisma": "^6.16.3",
     "ts-node": "^10.9.2",
     "ts-node-esm": "^0.0.6",

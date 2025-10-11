@@ -3,3 +3,9 @@ export type User = {
   password: string;
   email: string;
 };
+
+export type generateTokenType = {
+  data: object;
+  secret: string;
+  time: number;
+};

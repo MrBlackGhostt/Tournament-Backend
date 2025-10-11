@@ -4,20 +4,11 @@ import type { Request, Response } from "express";
 import type { User } from "./utils/type.ts";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
-import { unwatchFile } from "fs";
+import { generateToken } from "./utils/tokenVerify.js";
+import { checkPassword, hashPassword } from "./utils/passwordHash.js";
 
 const app = Express();
 const prisma = new PrismaClient();
-
-async function main() {
-  await prisma.user.create({
-    data: {
-      username: "Test",
-      password: "Test",
-      email: "test@test.com",
-    },
-  });
-}
 
 app.use(cookieParser());
 app.use(Express.json());
@@ -30,72 +21,116 @@ app.get("/", async (req: Request, res: Response) => {
 
 app.post("/signup", async (req: Request, res: Response) => {
   const { username, password, email }: User = req.body;
-  const check = await prisma.user.findUnique({
+  if (
+    username == null ||
+    email == null ||
+    username.length! <= 2 ||
+    email.length! <= 2 ||
+    password.length <= 3
+  ) {
+    console.log("Invalid user details fill the details correctly");
+    res.status(500).json("Invalid user details fill the details correctly");
+    return;
+  }
+  //Earlier use the findUnique but problem is that we can not put the two field as the user and email both are unique so need to check both the value for the user to be unique it check for  want OR. you would need to add OR inside
+  const userFound = await prisma.user.findFirst({
     where: {
-      username,
+      OR: [{ username }, { email }],
     },
   });
-  console.log("CHeck ", check);
-  try {
-    await prisma.user.create({
-      data: {
-        username,
-        password,
-        email,
-      },
+  if (userFound)
+    res.status(500).json({
+      message: "user with the username or email already created",
     });
-    res.status(200).send({ message: "user create successfull" });
+  try {
+    const hash_password = await hashPassword(password);
+    console.log("🚀 ---------------------------------🚀");
+    console.log("🚀 ~ hash_password:", hash_password);
+    console.log("🚀 ---------------------------------🚀");
+
+    if (hash_password) {
+      await prisma.user.create({
+        data: {
+          username,
+          password: hash_password,
+          email,
+        },
+      });
+      res.status(200).send({ message: "user create successfull" });
+    }
   } catch (error) {
     console.error("Error", error);
     res.status(404).send({
       message: "registration unsuccessfull",
+      error: "Email or username used already",
     });
   }
 });
 
-app.get("/signin", async (req, res) => {
-  const { username, email } = req.body;
-  console.log(username);
+app.post("/signin", async (req, res) => {
+  const { username, email, password } = req.body;
+
   console.log(email);
+  console.log("password", password);
+  if (
+    // username == null ||
+    // email == null ||
+    // username.length! <= 2 ||
+    // email.length! <= 2 ||
+    password.length <= 2
+  ) {
+    console.log("invalid detail of the user");
+    res.status(500).json("Invalid user details give the correct details");
+    return;
+  }
+
   try {
-    const foundUser = await prisma.user.findUnique({
+    const foundUser = await prisma.user.findFirst({
       where: {
-        username,
-        email,
+        OR: [{ username }, { email }],
       },
     });
 
-    console.log("check", foundUser);
+    if (foundUser) {
+      const passwordVerify = await checkPassword(foundUser.password, password);
+      console.log("🚀 -----------------------------------🚀");
+      console.log("🚀 ~ passwordVerify:", passwordVerify);
+      console.log("🚀 -----------------------------------🚀");
 
-    const accessToken = await jwt.sign(
-      { data: username || email },
-      "sodjfasdfsfsfsf"
-    );
+      if (!passwordVerify)
+        res.status(404).json({ message: "Password is incorrect" });
 
-    const refreshToken = await jwt.sign(
-      {
-        data: foundUser?.id,
-      },
-      "sodjfasdfsfsfsf"
-    );
+      const accessToken = generateToken({
+        data: { data: username || email },
+        secret: "sodjfasdfsfsfsf",
+        time: 10 * 60 * 1000,
+      });
 
-    console.log("token", accessToken);
-    // CREATING THE ACCESSTOKEN
+      const refreshToken = generateToken({
+        data: { data: foundUser?.id },
+        secret: "sodjfasdfsfsfsf",
+        time: 7 * 24 * 60 * 60 * 1000,
+      });
 
-    res.cookie("accessToken", accessToken, {
-      sameSite: true,
-      httpOnly: true,
-      maxAge: 10 * 60 * 100,
+      console.log("Accesstoken", accessToken);
+      // CREATING THE ACCESSTOKEN
 
-      secure: true,
-    });
-    res.cookie("refreshToken", refreshToken, {
-      sameSite: true,
-      httpOnly: true,
-      maxAge: 10 * 1000,
-      path: "/api/refresh",
-      secure: true,
-    });
+      res
+        .cookie("accessToken", accessToken, {
+          sameSite: true,
+          httpOnly: true,
+          maxAge: 8 * 60 * 100,
+          secure: true,
+        })
+        .cookie("refreshToken", refreshToken, {
+          sameSite: true,
+          httpOnly: true,
+          maxAge: 10 * 1000,
+          path: "/api/refresh",
+          secure: true,
+        })
+        .json({ message: "send the token", status: "signin complete" });
+    }
   } catch (error) {
     console.error("error finding the user", error);
     res.status(404).send("no user is present here");
@@ -123,5 +158,3 @@ app.get("/auth", async (req, res) => {
 app.listen("3000", () => {
   console.log("Listening on port 3000");
 });
-
-// main();
