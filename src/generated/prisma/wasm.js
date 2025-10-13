@@ -96,7 +96,20 @@ exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   username: 'username',
   password: 'password',
-  email: 'email'
+  email: 'email',
+  role: 'role'
+};
+
+exports.Prisma.OrgScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  adminId: 'adminId'
+};
+
+exports.Prisma.OrgManagerScalarFieldEnum = {
+  id: 'id',
+  orgId: 'orgId',
+  userId: 'userId'
 };
 
 exports.Prisma.SortOrder = {
@@ -108,10 +121,18 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
-
+exports.UserRole = exports.$Enums.UserRole = {
+  ADMIN: 'ADMIN',
+  MANAGER: 'MANAGER',
+  MODERATOR: 'MODERATOR',
+  ACE: 'ACE',
+  USER: 'USER'
+};
 
 exports.Prisma.ModelName = {
-  user: 'user'
+  User: 'User',
+  Org: 'Org',
+  OrgManager: 'OrgManager'
 };
 /**
  * Create the Client
@@ -160,13 +181,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel user {\n  id       Int    @id @default(autoincrement())\n  username String @unique @db.VarChar(255)\n  password String\n  email    String @unique @db.VarChar(255)\n}\n",
-  "inlineSchemaHash": "afe61197e0d4d0b095be6e25237c653e7818ba9fc3368fa813d300f3ca45e450",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum UserRole {\n  ADMIN\n  MANAGER\n  MODERATOR\n  ACE\n  USER\n}\n\nmodel User {\n  id        Int          @id @default(autoincrement())\n  username  String       @unique @db.VarChar(255)\n  password  String\n  email     String       @unique @db.VarChar(255)\n  role      UserRole     @default(USER)\n  orgJoin   Org[]\n  managerIn OrgManager[]\n}\n\nmodel Org {\n  id       Int          @id @default(autoincrement())\n  name     String       @unique @db.VarChar(255)\n  admin    User         @relation(fields: [adminId], references: [id])\n  adminId  Int          @unique\n  managers OrgManager[]\n}\n\nmodel OrgManager {\n  id     Int  @id @default(autoincrement())\n  orgId  Int\n  org    Org  @relation(fields: [orgId], references: [id])\n  user   User @relation(fields: [userId], references: [id])\n  userId Int\n\n  @@unique([userId, orgId])\n}\n",
+  "inlineSchemaHash": "5755b1a963399d4383b0a24d6321383abad8c1bcb792b5b55ea7e99b4c10dd79",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"user\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"UserRole\"},{\"name\":\"orgJoin\",\"kind\":\"object\",\"type\":\"Org\",\"relationName\":\"OrgToUser\"},{\"name\":\"managerIn\",\"kind\":\"object\",\"type\":\"OrgManager\",\"relationName\":\"OrgManagerToUser\"}],\"dbName\":null},\"Org\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"admin\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"OrgToUser\"},{\"name\":\"adminId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"managers\",\"kind\":\"object\",\"type\":\"OrgManager\",\"relationName\":\"OrgToOrgManager\"}],\"dbName\":null},\"OrgManager\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"orgId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"org\",\"kind\":\"object\",\"type\":\"Org\",\"relationName\":\"OrgToOrgManager\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"OrgManagerToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

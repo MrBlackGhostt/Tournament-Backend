@@ -14,10 +14,40 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model user
+ * Model User
  * 
  */
-export type user = $Result.DefaultSelection<Prisma.$userPayload>
+export type User = $Result.DefaultSelection<Prisma.$UserPayload>
+/**
+ * Model Org
+ * 
+ */
+export type Org = $Result.DefaultSelection<Prisma.$OrgPayload>
+/**
+ * Model OrgManager
+ * 
+ */
+export type OrgManager = $Result.DefaultSelection<Prisma.$OrgManagerPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const UserRole: {
+  ADMIN: 'ADMIN',
+  MANAGER: 'MANAGER',
+  MODERATOR: 'MODERATOR',
+  ACE: 'ACE',
+  USER: 'USER'
+};
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+}
+
+export type UserRole = $Enums.UserRole
+
+export const UserRole: typeof $Enums.UserRole
 
 /**
  * ##  Prisma Client ʲˢ
@@ -138,14 +168,34 @@ export class PrismaClient<
   }>>
 
       /**
-   * `prisma.user`: Exposes CRUD operations for the **user** model.
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
     * Example usage:
     * ```ts
     * // Fetch zero or more Users
     * const users = await prisma.user.findMany()
     * ```
     */
-  get user(): Prisma.userDelegate<ExtArgs, ClientOptions>;
+  get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.org`: Exposes CRUD operations for the **Org** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Orgs
+    * const orgs = await prisma.org.findMany()
+    * ```
+    */
+  get org(): Prisma.OrgDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.orgManager`: Exposes CRUD operations for the **OrgManager** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OrgManagers
+    * const orgManagers = await prisma.orgManager.findMany()
+    * ```
+    */
+  get orgManager(): Prisma.OrgManagerDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -586,7 +636,9 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    user: 'user'
+    User: 'User',
+    Org: 'Org',
+    OrgManager: 'OrgManager'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -605,81 +657,229 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user"
+      modelProps: "user" | "org" | "orgManager"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
-      user: {
-        payload: Prisma.$userPayload<ExtArgs>
-        fields: Prisma.userFieldRefs
+      User: {
+        payload: Prisma.$UserPayload<ExtArgs>
+        fields: Prisma.UserFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.userFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload> | null
+            args: Prisma.UserFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.userFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload>
+            args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           findFirst: {
-            args: Prisma.userFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload> | null
+            args: Prisma.UserFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.userFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload>
+            args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           findMany: {
-            args: Prisma.userFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload>[]
+            args: Prisma.UserFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           create: {
-            args: Prisma.userCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload>
+            args: Prisma.UserCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           createMany: {
-            args: Prisma.userCreateManyArgs<ExtArgs>
+            args: Prisma.UserCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.userCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload>[]
+            args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           delete: {
-            args: Prisma.userDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload>
+            args: Prisma.UserDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           update: {
-            args: Prisma.userUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload>
+            args: Prisma.UserUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           deleteMany: {
-            args: Prisma.userDeleteManyArgs<ExtArgs>
+            args: Prisma.UserDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.userUpdateManyArgs<ExtArgs>
+            args: Prisma.UserUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.userUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload>[]
+            args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           upsert: {
-            args: Prisma.userUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload>
+            args: Prisma.UserUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           aggregate: {
             args: Prisma.UserAggregateArgs<ExtArgs>
             result: $Utils.Optional<AggregateUser>
           }
           groupBy: {
-            args: Prisma.userGroupByArgs<ExtArgs>
+            args: Prisma.UserGroupByArgs<ExtArgs>
             result: $Utils.Optional<UserGroupByOutputType>[]
           }
           count: {
-            args: Prisma.userCountArgs<ExtArgs>
+            args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Org: {
+        payload: Prisma.$OrgPayload<ExtArgs>
+        fields: Prisma.OrgFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OrgFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OrgFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgPayload>
+          }
+          findFirst: {
+            args: Prisma.OrgFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OrgFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgPayload>
+          }
+          findMany: {
+            args: Prisma.OrgFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgPayload>[]
+          }
+          create: {
+            args: Prisma.OrgCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgPayload>
+          }
+          createMany: {
+            args: Prisma.OrgCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OrgCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgPayload>[]
+          }
+          delete: {
+            args: Prisma.OrgDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgPayload>
+          }
+          update: {
+            args: Prisma.OrgUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgPayload>
+          }
+          deleteMany: {
+            args: Prisma.OrgDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OrgUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.OrgUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgPayload>[]
+          }
+          upsert: {
+            args: Prisma.OrgUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgPayload>
+          }
+          aggregate: {
+            args: Prisma.OrgAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOrg>
+          }
+          groupBy: {
+            args: Prisma.OrgGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OrgGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OrgCountArgs<ExtArgs>
+            result: $Utils.Optional<OrgCountAggregateOutputType> | number
+          }
+        }
+      }
+      OrgManager: {
+        payload: Prisma.$OrgManagerPayload<ExtArgs>
+        fields: Prisma.OrgManagerFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OrgManagerFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgManagerPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OrgManagerFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgManagerPayload>
+          }
+          findFirst: {
+            args: Prisma.OrgManagerFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgManagerPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OrgManagerFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgManagerPayload>
+          }
+          findMany: {
+            args: Prisma.OrgManagerFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgManagerPayload>[]
+          }
+          create: {
+            args: Prisma.OrgManagerCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgManagerPayload>
+          }
+          createMany: {
+            args: Prisma.OrgManagerCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OrgManagerCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgManagerPayload>[]
+          }
+          delete: {
+            args: Prisma.OrgManagerDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgManagerPayload>
+          }
+          update: {
+            args: Prisma.OrgManagerUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgManagerPayload>
+          }
+          deleteMany: {
+            args: Prisma.OrgManagerDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OrgManagerUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.OrgManagerUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgManagerPayload>[]
+          }
+          upsert: {
+            args: Prisma.OrgManagerUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrgManagerPayload>
+          }
+          aggregate: {
+            args: Prisma.OrgManagerAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOrgManager>
+          }
+          groupBy: {
+            args: Prisma.OrgManagerGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OrgManagerGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OrgManagerCountArgs<ExtArgs>
+            result: $Utils.Optional<OrgManagerCountAggregateOutputType> | number
           }
         }
       }
@@ -779,7 +979,9 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
-    user?: userOmit
+    user?: UserOmit
+    org?: OrgOmit
+    orgManager?: OrgManagerOmit
   }
 
   /* Types for Logging */
@@ -855,13 +1057,83 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    orgJoin: number
+    managerIn: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    orgJoin?: boolean | UserCountOutputTypeCountOrgJoinArgs
+    managerIn?: boolean | UserCountOutputTypeCountManagerInArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountOrgJoinArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrgWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountManagerInArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrgManagerWhereInput
+  }
+
+
+  /**
+   * Count Type OrgCountOutputType
+   */
+
+  export type OrgCountOutputType = {
+    managers: number
+  }
+
+  export type OrgCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    managers?: boolean | OrgCountOutputTypeCountManagersArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * OrgCountOutputType without action
+   */
+  export type OrgCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrgCountOutputType
+     */
+    select?: OrgCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * OrgCountOutputType without action
+   */
+  export type OrgCountOutputTypeCountManagersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrgManagerWhereInput
+  }
+
 
   /**
    * Models
    */
 
   /**
-   * Model user
+   * Model User
    */
 
   export type AggregateUser = {
@@ -885,6 +1157,7 @@ export namespace Prisma {
     username: string | null
     password: string | null
     email: string | null
+    role: $Enums.UserRole | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -892,6 +1165,7 @@ export namespace Prisma {
     username: string | null
     password: string | null
     email: string | null
+    role: $Enums.UserRole | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -899,6 +1173,7 @@ export namespace Prisma {
     username: number
     password: number
     email: number
+    role: number
     _all: number
   }
 
@@ -916,6 +1191,7 @@ export namespace Prisma {
     username?: true
     password?: true
     email?: true
+    role?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -923,6 +1199,7 @@ export namespace Prisma {
     username?: true
     password?: true
     email?: true
+    role?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -930,42 +1207,43 @@ export namespace Prisma {
     username?: true
     password?: true
     email?: true
+    role?: true
     _all?: true
   }
 
   export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which user to aggregate.
+     * Filter which User to aggregate.
      */
-    where?: userWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of users to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: userOrderByWithRelationInput | userOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: userWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` users from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` users.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned users
+     * Count returned Users
     **/
     _count?: true | UserCountAggregateInputType
     /**
@@ -1005,11 +1283,11 @@ export namespace Prisma {
 
 
 
-  export type userGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: userWhereInput
-    orderBy?: userOrderByWithAggregationInput | userOrderByWithAggregationInput[]
+  export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[]
     by: UserScalarFieldEnum[] | UserScalarFieldEnum
-    having?: userScalarWhereWithAggregatesInput
+    having?: UserScalarWhereWithAggregatesInput
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
@@ -1024,6 +1302,7 @@ export namespace Prisma {
     username: string
     password: string
     email: string
+    role: $Enums.UserRole
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1031,7 +1310,7 @@ export namespace Prisma {
     _max: UserMaxAggregateOutputType | null
   }
 
-  type GetUserGroupByPayload<T extends userGroupByArgs> = Prisma.PrismaPromise<
+  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
     Array<
       PickEnumerable<UserGroupByOutputType, T['by']> &
         {
@@ -1045,60 +1324,78 @@ export namespace Prisma {
     >
 
 
-  export type userSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     username?: boolean
     password?: boolean
     email?: boolean
+    role?: boolean
+    orgJoin?: boolean | User$orgJoinArgs<ExtArgs>
+    managerIn?: boolean | User$managerInArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
-  export type userSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     username?: boolean
     password?: boolean
     email?: boolean
+    role?: boolean
   }, ExtArgs["result"]["user"]>
 
-  export type userSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     username?: boolean
     password?: boolean
     email?: boolean
+    role?: boolean
   }, ExtArgs["result"]["user"]>
 
-  export type userSelectScalar = {
+  export type UserSelectScalar = {
     id?: boolean
     username?: boolean
     password?: boolean
     email?: boolean
+    role?: boolean
   }
 
-  export type userOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "password" | "email", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "password" | "email" | "role", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    orgJoin?: boolean | User$orgJoinArgs<ExtArgs>
+    managerIn?: boolean | User$managerInArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $userPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "user"
-    objects: {}
+  export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "User"
+    objects: {
+      orgJoin: Prisma.$OrgPayload<ExtArgs>[]
+      managerIn: Prisma.$OrgManagerPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       username: string
       password: string
       email: string
+      role: $Enums.UserRole
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
 
-  type userGetPayload<S extends boolean | null | undefined | userDefaultArgs> = $Result.GetResult<Prisma.$userPayload, S>
+  type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
 
-  type userCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<userFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: UserCountAggregateInputType | true
     }
 
-  export interface userDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['user'], meta: { name: 'user' } }
+  export interface UserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['User'], meta: { name: 'User' } }
     /**
      * Find zero or one User that matches the filter.
-     * @param {userFindUniqueArgs} args - Arguments to find a User
+     * @param {UserFindUniqueArgs} args - Arguments to find a User
      * @example
      * // Get one User
      * const user = await prisma.user.findUnique({
@@ -1107,12 +1404,12 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUnique<T extends userFindUniqueArgs>(args: SelectSubset<T, userFindUniqueArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends UserFindUniqueArgs>(args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find one User that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {userFindUniqueOrThrowArgs} args - Arguments to find a User
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
      * @example
      * // Get one User
      * const user = await prisma.user.findUniqueOrThrow({
@@ -1121,13 +1418,13 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUniqueOrThrow<T extends userFindUniqueOrThrowArgs>(args: SelectSubset<T, userFindUniqueOrThrowArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first User that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {userFindFirstArgs} args - Arguments to find a User
+     * @param {UserFindFirstArgs} args - Arguments to find a User
      * @example
      * // Get one User
      * const user = await prisma.user.findFirst({
@@ -1136,14 +1433,14 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirst<T extends userFindFirstArgs>(args?: SelectSubset<T, userFindFirstArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends UserFindFirstArgs>(args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first User that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {userFindFirstOrThrowArgs} args - Arguments to find a User
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
      * @example
      * // Get one User
      * const user = await prisma.user.findFirstOrThrow({
@@ -1152,13 +1449,13 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirstOrThrow<T extends userFindFirstOrThrowArgs>(args?: SelectSubset<T, userFindFirstOrThrowArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more Users that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {userFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {UserFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
      * // Get all Users
      * const users = await prisma.user.findMany()
@@ -1170,11 +1467,11 @@ export namespace Prisma {
      * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends userFindManyArgs>(args?: SelectSubset<T, userFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
      * Create a User.
-     * @param {userCreateArgs} args - Arguments to create a User.
+     * @param {UserCreateArgs} args - Arguments to create a User.
      * @example
      * // Create one User
      * const User = await prisma.user.create({
@@ -1184,11 +1481,11 @@ export namespace Prisma {
      * })
      * 
      */
-    create<T extends userCreateArgs>(args: SelectSubset<T, userCreateArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends UserCreateArgs>(args: SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many Users.
-     * @param {userCreateManyArgs} args - Arguments to create many Users.
+     * @param {UserCreateManyArgs} args - Arguments to create many Users.
      * @example
      * // Create many Users
      * const user = await prisma.user.createMany({
@@ -1198,11 +1495,11 @@ export namespace Prisma {
      * })
      *     
      */
-    createMany<T extends userCreateManyArgs>(args?: SelectSubset<T, userCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends UserCreateManyArgs>(args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Create many Users and returns the data saved in the database.
-     * @param {userCreateManyAndReturnArgs} args - Arguments to create many Users.
+     * @param {UserCreateManyAndReturnArgs} args - Arguments to create many Users.
      * @example
      * // Create many Users
      * const user = await prisma.user.createManyAndReturn({
@@ -1222,11 +1519,11 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends userCreateManyAndReturnArgs>(args?: SelectSubset<T, userCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends UserCreateManyAndReturnArgs>(args?: SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
      * Delete a User.
-     * @param {userDeleteArgs} args - Arguments to delete one User.
+     * @param {UserDeleteArgs} args - Arguments to delete one User.
      * @example
      * // Delete one User
      * const User = await prisma.user.delete({
@@ -1236,11 +1533,11 @@ export namespace Prisma {
      * })
      * 
      */
-    delete<T extends userDeleteArgs>(args: SelectSubset<T, userDeleteArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends UserDeleteArgs>(args: SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Update one User.
-     * @param {userUpdateArgs} args - Arguments to update one User.
+     * @param {UserUpdateArgs} args - Arguments to update one User.
      * @example
      * // Update one User
      * const user = await prisma.user.update({
@@ -1253,11 +1550,11 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends userUpdateArgs>(args: SelectSubset<T, userUpdateArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends UserUpdateArgs>(args: SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more Users.
-     * @param {userDeleteManyArgs} args - Arguments to filter Users to delete.
+     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
      * @example
      * // Delete a few Users
      * const { count } = await prisma.user.deleteMany({
@@ -1267,13 +1564,13 @@ export namespace Prisma {
      * })
      * 
      */
-    deleteMany<T extends userDeleteManyArgs>(args?: SelectSubset<T, userDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends UserDeleteManyArgs>(args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Update zero or more Users.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {userUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
      * // Update many Users
      * const user = await prisma.user.updateMany({
@@ -1286,11 +1583,11 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends userUpdateManyArgs>(args: SelectSubset<T, userUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends UserUpdateManyArgs>(args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Update zero or more Users and returns the data updated in the database.
-     * @param {userUpdateManyAndReturnArgs} args - Arguments to update many Users.
+     * @param {UserUpdateManyAndReturnArgs} args - Arguments to update many Users.
      * @example
      * // Update many Users
      * const user = await prisma.user.updateManyAndReturn({
@@ -1316,11 +1613,11 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends userUpdateManyAndReturnArgs>(args: SelectSubset<T, userUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends UserUpdateManyAndReturnArgs>(args: SelectSubset<T, UserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
      * Create or update one User.
-     * @param {userUpsertArgs} args - Arguments to update or create a User.
+     * @param {UserUpsertArgs} args - Arguments to update or create a User.
      * @example
      * // Update or create a User
      * const user = await prisma.user.upsert({
@@ -1335,14 +1632,14 @@ export namespace Prisma {
      *   }
      * })
      */
-    upsert<T extends userUpsertArgs>(args: SelectSubset<T, userUpsertArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends UserUpsertArgs>(args: SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
      * Count the number of Users.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {userCountArgs} args - Arguments to filter Users to count.
+     * @param {UserCountArgs} args - Arguments to filter Users to count.
      * @example
      * // Count the number of Users
      * const count = await prisma.user.count({
@@ -1351,8 +1648,8 @@ export namespace Prisma {
      *   }
      * })
     **/
-    count<T extends userCountArgs>(
-      args?: Subset<T, userCountArgs>,
+    count<T extends UserCountArgs>(
+      args?: Subset<T, UserCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
@@ -1391,7 +1688,7 @@ export namespace Prisma {
      * Group by User.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {userGroupByArgs} args - Group by arguments.
+     * @param {UserGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -1406,14 +1703,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends userGroupByArgs,
+      T extends UserGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: userGroupByArgs['orderBy'] }
-        : { orderBy?: userGroupByArgs['orderBy'] },
+        ? { orderBy: UserGroupByArgs['orderBy'] }
+        : { orderBy?: UserGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -1462,21 +1759,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, userGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the user model
+   * Fields of the User model
    */
-  readonly fields: userFieldRefs;
+  readonly fields: UserFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for user.
+   * The delegate class that acts as a "Promise-like" for User.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__userClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    orgJoin<T extends User$orgJoinArgs<ExtArgs> = {}>(args?: Subset<T, User$orgJoinArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrgPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    managerIn<T extends User$managerInArgs<ExtArgs> = {}>(args?: Subset<T, User$managerInArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrgManagerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1503,376 +1802,2647 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the user model
+   * Fields of the User model
    */
-  interface userFieldRefs {
-    readonly id: FieldRef<"user", 'Int'>
-    readonly username: FieldRef<"user", 'String'>
-    readonly password: FieldRef<"user", 'String'>
-    readonly email: FieldRef<"user", 'String'>
+  interface UserFieldRefs {
+    readonly id: FieldRef<"User", 'Int'>
+    readonly username: FieldRef<"User", 'String'>
+    readonly password: FieldRef<"User", 'String'>
+    readonly email: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'UserRole'>
   }
     
 
   // Custom InputTypes
   /**
-   * user findUnique
+   * User findUnique
    */
-  export type userFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the user
+     * Select specific fields to fetch from the User
      */
-    select?: userSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the user
+     * Omit specific fields from the User
      */
-    omit?: userOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * Filter, which user to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where: userWhereUniqueInput
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
   }
 
   /**
-   * user findUniqueOrThrow
+   * User findUniqueOrThrow
    */
-  export type userFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the user
+     * Select specific fields to fetch from the User
      */
-    select?: userSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the user
+     * Omit specific fields from the User
      */
-    omit?: userOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * Filter, which user to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where: userWhereUniqueInput
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
   }
 
   /**
-   * user findFirst
+   * User findFirst
    */
-  export type userFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the user
+     * Select specific fields to fetch from the User
      */
-    select?: userSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the user
+     * Omit specific fields from the User
      */
-    omit?: userOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * Filter, which user to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where?: userWhereInput
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of users to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: userOrderByWithRelationInput | userOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for users.
+     * Sets the position for searching for Users.
      */
-    cursor?: userWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` users from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` users.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of users.
+     * Filter by unique combinations of Users.
      */
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
-   * user findFirstOrThrow
+   * User findFirstOrThrow
    */
-  export type userFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the user
+     * Select specific fields to fetch from the User
      */
-    select?: userSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the user
+     * Omit specific fields from the User
      */
-    omit?: userOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * Filter, which user to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where?: userWhereInput
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of users to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: userOrderByWithRelationInput | userOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for users.
+     * Sets the position for searching for Users.
      */
-    cursor?: userWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` users from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` users.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of users.
+     * Filter by unique combinations of Users.
      */
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
-   * user findMany
+   * User findMany
    */
-  export type userFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the user
+     * Select specific fields to fetch from the User
      */
-    select?: userSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the user
+     * Omit specific fields from the User
      */
-    omit?: userOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * Filter, which users to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where?: userWhereInput
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which Users to fetch.
+     */
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of users to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: userOrderByWithRelationInput | userOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing users.
+     * Sets the position for listing Users.
      */
-    cursor?: userWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` users from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` users.
+     * Skip the first `n` Users.
      */
     skip?: number
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
-   * user create
+   * User create
    */
-  export type userCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the user
+     * Select specific fields to fetch from the User
      */
-    select?: userSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the user
+     * Omit specific fields from the User
      */
-    omit?: userOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * The data needed to create a user.
+     * Choose, which related nodes to fetch as well
      */
-    data: XOR<userCreateInput, userUncheckedCreateInput>
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The data needed to create a User.
+     */
+    data: XOR<UserCreateInput, UserUncheckedCreateInput>
   }
 
   /**
-   * user createMany
+   * User createMany
    */
-  export type userCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many users.
+     * The data used to create many Users.
      */
-    data: userCreateManyInput | userCreateManyInput[]
+    data: UserCreateManyInput | UserCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * user createManyAndReturn
+   * User createManyAndReturn
    */
-  export type userCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the user
+     * Select specific fields to fetch from the User
      */
-    select?: userSelectCreateManyAndReturn<ExtArgs> | null
+    select?: UserSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the user
+     * Omit specific fields from the User
      */
-    omit?: userOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * The data used to create many users.
+     * The data used to create many Users.
      */
-    data: userCreateManyInput | userCreateManyInput[]
+    data: UserCreateManyInput | UserCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * user update
+   * User update
    */
-  export type userUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the user
+     * Select specific fields to fetch from the User
      */
-    select?: userSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the user
+     * Omit specific fields from the User
      */
-    omit?: userOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * The data needed to update a user.
+     * Choose, which related nodes to fetch as well
      */
-    data: XOR<userUpdateInput, userUncheckedUpdateInput>
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Choose, which user to update.
+     * The data needed to update a User.
      */
-    where: userWhereUniqueInput
+    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+    /**
+     * Choose, which User to update.
+     */
+    where: UserWhereUniqueInput
   }
 
   /**
-   * user updateMany
+   * User updateMany
    */
-  export type userUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update users.
+     * The data used to update Users.
      */
-    data: XOR<userUpdateManyMutationInput, userUncheckedUpdateManyInput>
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
     /**
-     * Filter which users to update
+     * Filter which Users to update
      */
-    where?: userWhereInput
+    where?: UserWhereInput
     /**
-     * Limit how many users to update.
+     * Limit how many Users to update.
      */
     limit?: number
   }
 
   /**
-   * user updateManyAndReturn
+   * User updateManyAndReturn
    */
-  export type userUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the user
+     * Select specific fields to fetch from the User
      */
-    select?: userSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: UserSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the user
+     * Omit specific fields from the User
      */
-    omit?: userOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * The data used to update users.
+     * The data used to update Users.
      */
-    data: XOR<userUpdateManyMutationInput, userUncheckedUpdateManyInput>
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
     /**
-     * Filter which users to update
+     * Filter which Users to update
      */
-    where?: userWhereInput
+    where?: UserWhereInput
     /**
-     * Limit how many users to update.
+     * Limit how many Users to update.
      */
     limit?: number
   }
 
   /**
-   * user upsert
+   * User upsert
    */
-  export type userUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the user
+     * Select specific fields to fetch from the User
      */
-    select?: userSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the user
+     * Omit specific fields from the User
      */
-    omit?: userOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * The filter to search for the user to update in case it exists.
+     * Choose, which related nodes to fetch as well
      */
-    where: userWhereUniqueInput
+    include?: UserInclude<ExtArgs> | null
     /**
-     * In case the user found by the `where` argument doesn't exist, create a new user with this data.
+     * The filter to search for the User to update in case it exists.
      */
-    create: XOR<userCreateInput, userUncheckedCreateInput>
+    where: UserWhereUniqueInput
     /**
-     * In case the user was found with the provided `where` argument, update it with this data.
+     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
      */
-    update: XOR<userUpdateInput, userUncheckedUpdateInput>
+    create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    /**
+     * In case the User was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
   }
 
   /**
-   * user delete
+   * User delete
    */
-  export type userDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the user
+     * Select specific fields to fetch from the User
      */
-    select?: userSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the user
+     * Omit specific fields from the User
      */
-    omit?: userOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * Filter which user to delete.
+     * Choose, which related nodes to fetch as well
      */
-    where: userWhereUniqueInput
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter which User to delete.
+     */
+    where: UserWhereUniqueInput
   }
 
   /**
-   * user deleteMany
+   * User deleteMany
    */
-  export type userDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which users to delete
+     * Filter which Users to delete
      */
-    where?: userWhereInput
+    where?: UserWhereInput
     /**
-     * Limit how many users to delete.
+     * Limit how many Users to delete.
      */
     limit?: number
   }
 
   /**
-   * user without action
+   * User.orgJoin
    */
-  export type userDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$orgJoinArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the user
+     * Select specific fields to fetch from the Org
      */
-    select?: userSelect<ExtArgs> | null
+    select?: OrgSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the user
+     * Omit specific fields from the Org
      */
-    omit?: userOmit<ExtArgs> | null
+    omit?: OrgOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgInclude<ExtArgs> | null
+    where?: OrgWhereInput
+    orderBy?: OrgOrderByWithRelationInput | OrgOrderByWithRelationInput[]
+    cursor?: OrgWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrgScalarFieldEnum | OrgScalarFieldEnum[]
+  }
+
+  /**
+   * User.managerIn
+   */
+  export type User$managerInArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrgManager
+     */
+    select?: OrgManagerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrgManager
+     */
+    omit?: OrgManagerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgManagerInclude<ExtArgs> | null
+    where?: OrgManagerWhereInput
+    orderBy?: OrgManagerOrderByWithRelationInput | OrgManagerOrderByWithRelationInput[]
+    cursor?: OrgManagerWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrgManagerScalarFieldEnum | OrgManagerScalarFieldEnum[]
+  }
+
+  /**
+   * User without action
+   */
+  export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Org
+   */
+
+  export type AggregateOrg = {
+    _count: OrgCountAggregateOutputType | null
+    _avg: OrgAvgAggregateOutputType | null
+    _sum: OrgSumAggregateOutputType | null
+    _min: OrgMinAggregateOutputType | null
+    _max: OrgMaxAggregateOutputType | null
+  }
+
+  export type OrgAvgAggregateOutputType = {
+    id: number | null
+    adminId: number | null
+  }
+
+  export type OrgSumAggregateOutputType = {
+    id: number | null
+    adminId: number | null
+  }
+
+  export type OrgMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    adminId: number | null
+  }
+
+  export type OrgMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    adminId: number | null
+  }
+
+  export type OrgCountAggregateOutputType = {
+    id: number
+    name: number
+    adminId: number
+    _all: number
+  }
+
+
+  export type OrgAvgAggregateInputType = {
+    id?: true
+    adminId?: true
+  }
+
+  export type OrgSumAggregateInputType = {
+    id?: true
+    adminId?: true
+  }
+
+  export type OrgMinAggregateInputType = {
+    id?: true
+    name?: true
+    adminId?: true
+  }
+
+  export type OrgMaxAggregateInputType = {
+    id?: true
+    name?: true
+    adminId?: true
+  }
+
+  export type OrgCountAggregateInputType = {
+    id?: true
+    name?: true
+    adminId?: true
+    _all?: true
+  }
+
+  export type OrgAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Org to aggregate.
+     */
+    where?: OrgWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Orgs to fetch.
+     */
+    orderBy?: OrgOrderByWithRelationInput | OrgOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OrgWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Orgs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Orgs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Orgs
+    **/
+    _count?: true | OrgCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: OrgAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: OrgSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OrgMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OrgMaxAggregateInputType
+  }
+
+  export type GetOrgAggregateType<T extends OrgAggregateArgs> = {
+        [P in keyof T & keyof AggregateOrg]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOrg[P]>
+      : GetScalarType<T[P], AggregateOrg[P]>
+  }
+
+
+
+
+  export type OrgGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrgWhereInput
+    orderBy?: OrgOrderByWithAggregationInput | OrgOrderByWithAggregationInput[]
+    by: OrgScalarFieldEnum[] | OrgScalarFieldEnum
+    having?: OrgScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OrgCountAggregateInputType | true
+    _avg?: OrgAvgAggregateInputType
+    _sum?: OrgSumAggregateInputType
+    _min?: OrgMinAggregateInputType
+    _max?: OrgMaxAggregateInputType
+  }
+
+  export type OrgGroupByOutputType = {
+    id: number
+    name: string
+    adminId: number
+    _count: OrgCountAggregateOutputType | null
+    _avg: OrgAvgAggregateOutputType | null
+    _sum: OrgSumAggregateOutputType | null
+    _min: OrgMinAggregateOutputType | null
+    _max: OrgMaxAggregateOutputType | null
+  }
+
+  type GetOrgGroupByPayload<T extends OrgGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OrgGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OrgGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OrgGroupByOutputType[P]>
+            : GetScalarType<T[P], OrgGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OrgSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    adminId?: boolean
+    admin?: boolean | UserDefaultArgs<ExtArgs>
+    managers?: boolean | Org$managersArgs<ExtArgs>
+    _count?: boolean | OrgCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["org"]>
+
+  export type OrgSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    adminId?: boolean
+    admin?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["org"]>
+
+  export type OrgSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    adminId?: boolean
+    admin?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["org"]>
+
+  export type OrgSelectScalar = {
+    id?: boolean
+    name?: boolean
+    adminId?: boolean
+  }
+
+  export type OrgOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "adminId", ExtArgs["result"]["org"]>
+  export type OrgInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    admin?: boolean | UserDefaultArgs<ExtArgs>
+    managers?: boolean | Org$managersArgs<ExtArgs>
+    _count?: boolean | OrgCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type OrgIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    admin?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type OrgIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    admin?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $OrgPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Org"
+    objects: {
+      admin: Prisma.$UserPayload<ExtArgs>
+      managers: Prisma.$OrgManagerPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      adminId: number
+    }, ExtArgs["result"]["org"]>
+    composites: {}
+  }
+
+  type OrgGetPayload<S extends boolean | null | undefined | OrgDefaultArgs> = $Result.GetResult<Prisma.$OrgPayload, S>
+
+  type OrgCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<OrgFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: OrgCountAggregateInputType | true
+    }
+
+  export interface OrgDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Org'], meta: { name: 'Org' } }
+    /**
+     * Find zero or one Org that matches the filter.
+     * @param {OrgFindUniqueArgs} args - Arguments to find a Org
+     * @example
+     * // Get one Org
+     * const org = await prisma.org.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OrgFindUniqueArgs>(args: SelectSubset<T, OrgFindUniqueArgs<ExtArgs>>): Prisma__OrgClient<$Result.GetResult<Prisma.$OrgPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Org that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {OrgFindUniqueOrThrowArgs} args - Arguments to find a Org
+     * @example
+     * // Get one Org
+     * const org = await prisma.org.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OrgFindUniqueOrThrowArgs>(args: SelectSubset<T, OrgFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OrgClient<$Result.GetResult<Prisma.$OrgPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Org that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrgFindFirstArgs} args - Arguments to find a Org
+     * @example
+     * // Get one Org
+     * const org = await prisma.org.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OrgFindFirstArgs>(args?: SelectSubset<T, OrgFindFirstArgs<ExtArgs>>): Prisma__OrgClient<$Result.GetResult<Prisma.$OrgPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Org that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrgFindFirstOrThrowArgs} args - Arguments to find a Org
+     * @example
+     * // Get one Org
+     * const org = await prisma.org.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OrgFindFirstOrThrowArgs>(args?: SelectSubset<T, OrgFindFirstOrThrowArgs<ExtArgs>>): Prisma__OrgClient<$Result.GetResult<Prisma.$OrgPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Orgs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrgFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Orgs
+     * const orgs = await prisma.org.findMany()
+     * 
+     * // Get first 10 Orgs
+     * const orgs = await prisma.org.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const orgWithIdOnly = await prisma.org.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends OrgFindManyArgs>(args?: SelectSubset<T, OrgFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrgPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Org.
+     * @param {OrgCreateArgs} args - Arguments to create a Org.
+     * @example
+     * // Create one Org
+     * const Org = await prisma.org.create({
+     *   data: {
+     *     // ... data to create a Org
+     *   }
+     * })
+     * 
+     */
+    create<T extends OrgCreateArgs>(args: SelectSubset<T, OrgCreateArgs<ExtArgs>>): Prisma__OrgClient<$Result.GetResult<Prisma.$OrgPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Orgs.
+     * @param {OrgCreateManyArgs} args - Arguments to create many Orgs.
+     * @example
+     * // Create many Orgs
+     * const org = await prisma.org.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OrgCreateManyArgs>(args?: SelectSubset<T, OrgCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Orgs and returns the data saved in the database.
+     * @param {OrgCreateManyAndReturnArgs} args - Arguments to create many Orgs.
+     * @example
+     * // Create many Orgs
+     * const org = await prisma.org.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Orgs and only return the `id`
+     * const orgWithIdOnly = await prisma.org.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OrgCreateManyAndReturnArgs>(args?: SelectSubset<T, OrgCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrgPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Org.
+     * @param {OrgDeleteArgs} args - Arguments to delete one Org.
+     * @example
+     * // Delete one Org
+     * const Org = await prisma.org.delete({
+     *   where: {
+     *     // ... filter to delete one Org
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OrgDeleteArgs>(args: SelectSubset<T, OrgDeleteArgs<ExtArgs>>): Prisma__OrgClient<$Result.GetResult<Prisma.$OrgPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Org.
+     * @param {OrgUpdateArgs} args - Arguments to update one Org.
+     * @example
+     * // Update one Org
+     * const org = await prisma.org.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OrgUpdateArgs>(args: SelectSubset<T, OrgUpdateArgs<ExtArgs>>): Prisma__OrgClient<$Result.GetResult<Prisma.$OrgPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Orgs.
+     * @param {OrgDeleteManyArgs} args - Arguments to filter Orgs to delete.
+     * @example
+     * // Delete a few Orgs
+     * const { count } = await prisma.org.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OrgDeleteManyArgs>(args?: SelectSubset<T, OrgDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Orgs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrgUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Orgs
+     * const org = await prisma.org.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OrgUpdateManyArgs>(args: SelectSubset<T, OrgUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Orgs and returns the data updated in the database.
+     * @param {OrgUpdateManyAndReturnArgs} args - Arguments to update many Orgs.
+     * @example
+     * // Update many Orgs
+     * const org = await prisma.org.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Orgs and only return the `id`
+     * const orgWithIdOnly = await prisma.org.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends OrgUpdateManyAndReturnArgs>(args: SelectSubset<T, OrgUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrgPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Org.
+     * @param {OrgUpsertArgs} args - Arguments to update or create a Org.
+     * @example
+     * // Update or create a Org
+     * const org = await prisma.org.upsert({
+     *   create: {
+     *     // ... data to create a Org
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Org we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OrgUpsertArgs>(args: SelectSubset<T, OrgUpsertArgs<ExtArgs>>): Prisma__OrgClient<$Result.GetResult<Prisma.$OrgPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Orgs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrgCountArgs} args - Arguments to filter Orgs to count.
+     * @example
+     * // Count the number of Orgs
+     * const count = await prisma.org.count({
+     *   where: {
+     *     // ... the filter for the Orgs we want to count
+     *   }
+     * })
+    **/
+    count<T extends OrgCountArgs>(
+      args?: Subset<T, OrgCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OrgCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Org.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrgAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OrgAggregateArgs>(args: Subset<T, OrgAggregateArgs>): Prisma.PrismaPromise<GetOrgAggregateType<T>>
+
+    /**
+     * Group by Org.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrgGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OrgGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OrgGroupByArgs['orderBy'] }
+        : { orderBy?: OrgGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OrgGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOrgGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Org model
+   */
+  readonly fields: OrgFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Org.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OrgClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    admin<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    managers<T extends Org$managersArgs<ExtArgs> = {}>(args?: Subset<T, Org$managersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrgManagerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Org model
+   */
+  interface OrgFieldRefs {
+    readonly id: FieldRef<"Org", 'Int'>
+    readonly name: FieldRef<"Org", 'String'>
+    readonly adminId: FieldRef<"Org", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Org findUnique
+   */
+  export type OrgFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Org
+     */
+    select?: OrgSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Org
+     */
+    omit?: OrgOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgInclude<ExtArgs> | null
+    /**
+     * Filter, which Org to fetch.
+     */
+    where: OrgWhereUniqueInput
+  }
+
+  /**
+   * Org findUniqueOrThrow
+   */
+  export type OrgFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Org
+     */
+    select?: OrgSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Org
+     */
+    omit?: OrgOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgInclude<ExtArgs> | null
+    /**
+     * Filter, which Org to fetch.
+     */
+    where: OrgWhereUniqueInput
+  }
+
+  /**
+   * Org findFirst
+   */
+  export type OrgFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Org
+     */
+    select?: OrgSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Org
+     */
+    omit?: OrgOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgInclude<ExtArgs> | null
+    /**
+     * Filter, which Org to fetch.
+     */
+    where?: OrgWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Orgs to fetch.
+     */
+    orderBy?: OrgOrderByWithRelationInput | OrgOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Orgs.
+     */
+    cursor?: OrgWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Orgs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Orgs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Orgs.
+     */
+    distinct?: OrgScalarFieldEnum | OrgScalarFieldEnum[]
+  }
+
+  /**
+   * Org findFirstOrThrow
+   */
+  export type OrgFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Org
+     */
+    select?: OrgSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Org
+     */
+    omit?: OrgOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgInclude<ExtArgs> | null
+    /**
+     * Filter, which Org to fetch.
+     */
+    where?: OrgWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Orgs to fetch.
+     */
+    orderBy?: OrgOrderByWithRelationInput | OrgOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Orgs.
+     */
+    cursor?: OrgWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Orgs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Orgs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Orgs.
+     */
+    distinct?: OrgScalarFieldEnum | OrgScalarFieldEnum[]
+  }
+
+  /**
+   * Org findMany
+   */
+  export type OrgFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Org
+     */
+    select?: OrgSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Org
+     */
+    omit?: OrgOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgInclude<ExtArgs> | null
+    /**
+     * Filter, which Orgs to fetch.
+     */
+    where?: OrgWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Orgs to fetch.
+     */
+    orderBy?: OrgOrderByWithRelationInput | OrgOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Orgs.
+     */
+    cursor?: OrgWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Orgs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Orgs.
+     */
+    skip?: number
+    distinct?: OrgScalarFieldEnum | OrgScalarFieldEnum[]
+  }
+
+  /**
+   * Org create
+   */
+  export type OrgCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Org
+     */
+    select?: OrgSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Org
+     */
+    omit?: OrgOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Org.
+     */
+    data: XOR<OrgCreateInput, OrgUncheckedCreateInput>
+  }
+
+  /**
+   * Org createMany
+   */
+  export type OrgCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Orgs.
+     */
+    data: OrgCreateManyInput | OrgCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Org createManyAndReturn
+   */
+  export type OrgCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Org
+     */
+    select?: OrgSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Org
+     */
+    omit?: OrgOmit<ExtArgs> | null
+    /**
+     * The data used to create many Orgs.
+     */
+    data: OrgCreateManyInput | OrgCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Org update
+   */
+  export type OrgUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Org
+     */
+    select?: OrgSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Org
+     */
+    omit?: OrgOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Org.
+     */
+    data: XOR<OrgUpdateInput, OrgUncheckedUpdateInput>
+    /**
+     * Choose, which Org to update.
+     */
+    where: OrgWhereUniqueInput
+  }
+
+  /**
+   * Org updateMany
+   */
+  export type OrgUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Orgs.
+     */
+    data: XOR<OrgUpdateManyMutationInput, OrgUncheckedUpdateManyInput>
+    /**
+     * Filter which Orgs to update
+     */
+    where?: OrgWhereInput
+    /**
+     * Limit how many Orgs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Org updateManyAndReturn
+   */
+  export type OrgUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Org
+     */
+    select?: OrgSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Org
+     */
+    omit?: OrgOmit<ExtArgs> | null
+    /**
+     * The data used to update Orgs.
+     */
+    data: XOR<OrgUpdateManyMutationInput, OrgUncheckedUpdateManyInput>
+    /**
+     * Filter which Orgs to update
+     */
+    where?: OrgWhereInput
+    /**
+     * Limit how many Orgs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Org upsert
+   */
+  export type OrgUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Org
+     */
+    select?: OrgSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Org
+     */
+    omit?: OrgOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Org to update in case it exists.
+     */
+    where: OrgWhereUniqueInput
+    /**
+     * In case the Org found by the `where` argument doesn't exist, create a new Org with this data.
+     */
+    create: XOR<OrgCreateInput, OrgUncheckedCreateInput>
+    /**
+     * In case the Org was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OrgUpdateInput, OrgUncheckedUpdateInput>
+  }
+
+  /**
+   * Org delete
+   */
+  export type OrgDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Org
+     */
+    select?: OrgSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Org
+     */
+    omit?: OrgOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgInclude<ExtArgs> | null
+    /**
+     * Filter which Org to delete.
+     */
+    where: OrgWhereUniqueInput
+  }
+
+  /**
+   * Org deleteMany
+   */
+  export type OrgDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Orgs to delete
+     */
+    where?: OrgWhereInput
+    /**
+     * Limit how many Orgs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Org.managers
+   */
+  export type Org$managersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrgManager
+     */
+    select?: OrgManagerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrgManager
+     */
+    omit?: OrgManagerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgManagerInclude<ExtArgs> | null
+    where?: OrgManagerWhereInput
+    orderBy?: OrgManagerOrderByWithRelationInput | OrgManagerOrderByWithRelationInput[]
+    cursor?: OrgManagerWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrgManagerScalarFieldEnum | OrgManagerScalarFieldEnum[]
+  }
+
+  /**
+   * Org without action
+   */
+  export type OrgDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Org
+     */
+    select?: OrgSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Org
+     */
+    omit?: OrgOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model OrgManager
+   */
+
+  export type AggregateOrgManager = {
+    _count: OrgManagerCountAggregateOutputType | null
+    _avg: OrgManagerAvgAggregateOutputType | null
+    _sum: OrgManagerSumAggregateOutputType | null
+    _min: OrgManagerMinAggregateOutputType | null
+    _max: OrgManagerMaxAggregateOutputType | null
+  }
+
+  export type OrgManagerAvgAggregateOutputType = {
+    id: number | null
+    orgId: number | null
+    userId: number | null
+  }
+
+  export type OrgManagerSumAggregateOutputType = {
+    id: number | null
+    orgId: number | null
+    userId: number | null
+  }
+
+  export type OrgManagerMinAggregateOutputType = {
+    id: number | null
+    orgId: number | null
+    userId: number | null
+  }
+
+  export type OrgManagerMaxAggregateOutputType = {
+    id: number | null
+    orgId: number | null
+    userId: number | null
+  }
+
+  export type OrgManagerCountAggregateOutputType = {
+    id: number
+    orgId: number
+    userId: number
+    _all: number
+  }
+
+
+  export type OrgManagerAvgAggregateInputType = {
+    id?: true
+    orgId?: true
+    userId?: true
+  }
+
+  export type OrgManagerSumAggregateInputType = {
+    id?: true
+    orgId?: true
+    userId?: true
+  }
+
+  export type OrgManagerMinAggregateInputType = {
+    id?: true
+    orgId?: true
+    userId?: true
+  }
+
+  export type OrgManagerMaxAggregateInputType = {
+    id?: true
+    orgId?: true
+    userId?: true
+  }
+
+  export type OrgManagerCountAggregateInputType = {
+    id?: true
+    orgId?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type OrgManagerAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OrgManager to aggregate.
+     */
+    where?: OrgManagerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrgManagers to fetch.
+     */
+    orderBy?: OrgManagerOrderByWithRelationInput | OrgManagerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OrgManagerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrgManagers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrgManagers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned OrgManagers
+    **/
+    _count?: true | OrgManagerCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: OrgManagerAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: OrgManagerSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OrgManagerMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OrgManagerMaxAggregateInputType
+  }
+
+  export type GetOrgManagerAggregateType<T extends OrgManagerAggregateArgs> = {
+        [P in keyof T & keyof AggregateOrgManager]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOrgManager[P]>
+      : GetScalarType<T[P], AggregateOrgManager[P]>
+  }
+
+
+
+
+  export type OrgManagerGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrgManagerWhereInput
+    orderBy?: OrgManagerOrderByWithAggregationInput | OrgManagerOrderByWithAggregationInput[]
+    by: OrgManagerScalarFieldEnum[] | OrgManagerScalarFieldEnum
+    having?: OrgManagerScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OrgManagerCountAggregateInputType | true
+    _avg?: OrgManagerAvgAggregateInputType
+    _sum?: OrgManagerSumAggregateInputType
+    _min?: OrgManagerMinAggregateInputType
+    _max?: OrgManagerMaxAggregateInputType
+  }
+
+  export type OrgManagerGroupByOutputType = {
+    id: number
+    orgId: number
+    userId: number
+    _count: OrgManagerCountAggregateOutputType | null
+    _avg: OrgManagerAvgAggregateOutputType | null
+    _sum: OrgManagerSumAggregateOutputType | null
+    _min: OrgManagerMinAggregateOutputType | null
+    _max: OrgManagerMaxAggregateOutputType | null
+  }
+
+  type GetOrgManagerGroupByPayload<T extends OrgManagerGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OrgManagerGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OrgManagerGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OrgManagerGroupByOutputType[P]>
+            : GetScalarType<T[P], OrgManagerGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OrgManagerSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    orgId?: boolean
+    userId?: boolean
+    org?: boolean | OrgDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["orgManager"]>
+
+  export type OrgManagerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    orgId?: boolean
+    userId?: boolean
+    org?: boolean | OrgDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["orgManager"]>
+
+  export type OrgManagerSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    orgId?: boolean
+    userId?: boolean
+    org?: boolean | OrgDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["orgManager"]>
+
+  export type OrgManagerSelectScalar = {
+    id?: boolean
+    orgId?: boolean
+    userId?: boolean
+  }
+
+  export type OrgManagerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "orgId" | "userId", ExtArgs["result"]["orgManager"]>
+  export type OrgManagerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    org?: boolean | OrgDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type OrgManagerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    org?: boolean | OrgDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type OrgManagerIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    org?: boolean | OrgDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $OrgManagerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "OrgManager"
+    objects: {
+      org: Prisma.$OrgPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      orgId: number
+      userId: number
+    }, ExtArgs["result"]["orgManager"]>
+    composites: {}
+  }
+
+  type OrgManagerGetPayload<S extends boolean | null | undefined | OrgManagerDefaultArgs> = $Result.GetResult<Prisma.$OrgManagerPayload, S>
+
+  type OrgManagerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<OrgManagerFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: OrgManagerCountAggregateInputType | true
+    }
+
+  export interface OrgManagerDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OrgManager'], meta: { name: 'OrgManager' } }
+    /**
+     * Find zero or one OrgManager that matches the filter.
+     * @param {OrgManagerFindUniqueArgs} args - Arguments to find a OrgManager
+     * @example
+     * // Get one OrgManager
+     * const orgManager = await prisma.orgManager.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OrgManagerFindUniqueArgs>(args: SelectSubset<T, OrgManagerFindUniqueArgs<ExtArgs>>): Prisma__OrgManagerClient<$Result.GetResult<Prisma.$OrgManagerPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one OrgManager that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {OrgManagerFindUniqueOrThrowArgs} args - Arguments to find a OrgManager
+     * @example
+     * // Get one OrgManager
+     * const orgManager = await prisma.orgManager.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OrgManagerFindUniqueOrThrowArgs>(args: SelectSubset<T, OrgManagerFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OrgManagerClient<$Result.GetResult<Prisma.$OrgManagerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first OrgManager that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrgManagerFindFirstArgs} args - Arguments to find a OrgManager
+     * @example
+     * // Get one OrgManager
+     * const orgManager = await prisma.orgManager.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OrgManagerFindFirstArgs>(args?: SelectSubset<T, OrgManagerFindFirstArgs<ExtArgs>>): Prisma__OrgManagerClient<$Result.GetResult<Prisma.$OrgManagerPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first OrgManager that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrgManagerFindFirstOrThrowArgs} args - Arguments to find a OrgManager
+     * @example
+     * // Get one OrgManager
+     * const orgManager = await prisma.orgManager.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OrgManagerFindFirstOrThrowArgs>(args?: SelectSubset<T, OrgManagerFindFirstOrThrowArgs<ExtArgs>>): Prisma__OrgManagerClient<$Result.GetResult<Prisma.$OrgManagerPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more OrgManagers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrgManagerFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all OrgManagers
+     * const orgManagers = await prisma.orgManager.findMany()
+     * 
+     * // Get first 10 OrgManagers
+     * const orgManagers = await prisma.orgManager.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const orgManagerWithIdOnly = await prisma.orgManager.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends OrgManagerFindManyArgs>(args?: SelectSubset<T, OrgManagerFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrgManagerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a OrgManager.
+     * @param {OrgManagerCreateArgs} args - Arguments to create a OrgManager.
+     * @example
+     * // Create one OrgManager
+     * const OrgManager = await prisma.orgManager.create({
+     *   data: {
+     *     // ... data to create a OrgManager
+     *   }
+     * })
+     * 
+     */
+    create<T extends OrgManagerCreateArgs>(args: SelectSubset<T, OrgManagerCreateArgs<ExtArgs>>): Prisma__OrgManagerClient<$Result.GetResult<Prisma.$OrgManagerPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many OrgManagers.
+     * @param {OrgManagerCreateManyArgs} args - Arguments to create many OrgManagers.
+     * @example
+     * // Create many OrgManagers
+     * const orgManager = await prisma.orgManager.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OrgManagerCreateManyArgs>(args?: SelectSubset<T, OrgManagerCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many OrgManagers and returns the data saved in the database.
+     * @param {OrgManagerCreateManyAndReturnArgs} args - Arguments to create many OrgManagers.
+     * @example
+     * // Create many OrgManagers
+     * const orgManager = await prisma.orgManager.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many OrgManagers and only return the `id`
+     * const orgManagerWithIdOnly = await prisma.orgManager.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OrgManagerCreateManyAndReturnArgs>(args?: SelectSubset<T, OrgManagerCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrgManagerPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a OrgManager.
+     * @param {OrgManagerDeleteArgs} args - Arguments to delete one OrgManager.
+     * @example
+     * // Delete one OrgManager
+     * const OrgManager = await prisma.orgManager.delete({
+     *   where: {
+     *     // ... filter to delete one OrgManager
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OrgManagerDeleteArgs>(args: SelectSubset<T, OrgManagerDeleteArgs<ExtArgs>>): Prisma__OrgManagerClient<$Result.GetResult<Prisma.$OrgManagerPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one OrgManager.
+     * @param {OrgManagerUpdateArgs} args - Arguments to update one OrgManager.
+     * @example
+     * // Update one OrgManager
+     * const orgManager = await prisma.orgManager.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OrgManagerUpdateArgs>(args: SelectSubset<T, OrgManagerUpdateArgs<ExtArgs>>): Prisma__OrgManagerClient<$Result.GetResult<Prisma.$OrgManagerPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more OrgManagers.
+     * @param {OrgManagerDeleteManyArgs} args - Arguments to filter OrgManagers to delete.
+     * @example
+     * // Delete a few OrgManagers
+     * const { count } = await prisma.orgManager.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OrgManagerDeleteManyArgs>(args?: SelectSubset<T, OrgManagerDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OrgManagers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrgManagerUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many OrgManagers
+     * const orgManager = await prisma.orgManager.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OrgManagerUpdateManyArgs>(args: SelectSubset<T, OrgManagerUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OrgManagers and returns the data updated in the database.
+     * @param {OrgManagerUpdateManyAndReturnArgs} args - Arguments to update many OrgManagers.
+     * @example
+     * // Update many OrgManagers
+     * const orgManager = await prisma.orgManager.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more OrgManagers and only return the `id`
+     * const orgManagerWithIdOnly = await prisma.orgManager.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends OrgManagerUpdateManyAndReturnArgs>(args: SelectSubset<T, OrgManagerUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrgManagerPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one OrgManager.
+     * @param {OrgManagerUpsertArgs} args - Arguments to update or create a OrgManager.
+     * @example
+     * // Update or create a OrgManager
+     * const orgManager = await prisma.orgManager.upsert({
+     *   create: {
+     *     // ... data to create a OrgManager
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the OrgManager we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OrgManagerUpsertArgs>(args: SelectSubset<T, OrgManagerUpsertArgs<ExtArgs>>): Prisma__OrgManagerClient<$Result.GetResult<Prisma.$OrgManagerPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of OrgManagers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrgManagerCountArgs} args - Arguments to filter OrgManagers to count.
+     * @example
+     * // Count the number of OrgManagers
+     * const count = await prisma.orgManager.count({
+     *   where: {
+     *     // ... the filter for the OrgManagers we want to count
+     *   }
+     * })
+    **/
+    count<T extends OrgManagerCountArgs>(
+      args?: Subset<T, OrgManagerCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OrgManagerCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a OrgManager.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrgManagerAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OrgManagerAggregateArgs>(args: Subset<T, OrgManagerAggregateArgs>): Prisma.PrismaPromise<GetOrgManagerAggregateType<T>>
+
+    /**
+     * Group by OrgManager.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrgManagerGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OrgManagerGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OrgManagerGroupByArgs['orderBy'] }
+        : { orderBy?: OrgManagerGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OrgManagerGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOrgManagerGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the OrgManager model
+   */
+  readonly fields: OrgManagerFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for OrgManager.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OrgManagerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    org<T extends OrgDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrgDefaultArgs<ExtArgs>>): Prisma__OrgClient<$Result.GetResult<Prisma.$OrgPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the OrgManager model
+   */
+  interface OrgManagerFieldRefs {
+    readonly id: FieldRef<"OrgManager", 'Int'>
+    readonly orgId: FieldRef<"OrgManager", 'Int'>
+    readonly userId: FieldRef<"OrgManager", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * OrgManager findUnique
+   */
+  export type OrgManagerFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrgManager
+     */
+    select?: OrgManagerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrgManager
+     */
+    omit?: OrgManagerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgManagerInclude<ExtArgs> | null
+    /**
+     * Filter, which OrgManager to fetch.
+     */
+    where: OrgManagerWhereUniqueInput
+  }
+
+  /**
+   * OrgManager findUniqueOrThrow
+   */
+  export type OrgManagerFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrgManager
+     */
+    select?: OrgManagerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrgManager
+     */
+    omit?: OrgManagerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgManagerInclude<ExtArgs> | null
+    /**
+     * Filter, which OrgManager to fetch.
+     */
+    where: OrgManagerWhereUniqueInput
+  }
+
+  /**
+   * OrgManager findFirst
+   */
+  export type OrgManagerFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrgManager
+     */
+    select?: OrgManagerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrgManager
+     */
+    omit?: OrgManagerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgManagerInclude<ExtArgs> | null
+    /**
+     * Filter, which OrgManager to fetch.
+     */
+    where?: OrgManagerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrgManagers to fetch.
+     */
+    orderBy?: OrgManagerOrderByWithRelationInput | OrgManagerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OrgManagers.
+     */
+    cursor?: OrgManagerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrgManagers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrgManagers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OrgManagers.
+     */
+    distinct?: OrgManagerScalarFieldEnum | OrgManagerScalarFieldEnum[]
+  }
+
+  /**
+   * OrgManager findFirstOrThrow
+   */
+  export type OrgManagerFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrgManager
+     */
+    select?: OrgManagerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrgManager
+     */
+    omit?: OrgManagerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgManagerInclude<ExtArgs> | null
+    /**
+     * Filter, which OrgManager to fetch.
+     */
+    where?: OrgManagerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrgManagers to fetch.
+     */
+    orderBy?: OrgManagerOrderByWithRelationInput | OrgManagerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OrgManagers.
+     */
+    cursor?: OrgManagerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrgManagers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrgManagers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OrgManagers.
+     */
+    distinct?: OrgManagerScalarFieldEnum | OrgManagerScalarFieldEnum[]
+  }
+
+  /**
+   * OrgManager findMany
+   */
+  export type OrgManagerFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrgManager
+     */
+    select?: OrgManagerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrgManager
+     */
+    omit?: OrgManagerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgManagerInclude<ExtArgs> | null
+    /**
+     * Filter, which OrgManagers to fetch.
+     */
+    where?: OrgManagerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrgManagers to fetch.
+     */
+    orderBy?: OrgManagerOrderByWithRelationInput | OrgManagerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing OrgManagers.
+     */
+    cursor?: OrgManagerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrgManagers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrgManagers.
+     */
+    skip?: number
+    distinct?: OrgManagerScalarFieldEnum | OrgManagerScalarFieldEnum[]
+  }
+
+  /**
+   * OrgManager create
+   */
+  export type OrgManagerCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrgManager
+     */
+    select?: OrgManagerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrgManager
+     */
+    omit?: OrgManagerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgManagerInclude<ExtArgs> | null
+    /**
+     * The data needed to create a OrgManager.
+     */
+    data: XOR<OrgManagerCreateInput, OrgManagerUncheckedCreateInput>
+  }
+
+  /**
+   * OrgManager createMany
+   */
+  export type OrgManagerCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many OrgManagers.
+     */
+    data: OrgManagerCreateManyInput | OrgManagerCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * OrgManager createManyAndReturn
+   */
+  export type OrgManagerCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrgManager
+     */
+    select?: OrgManagerSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrgManager
+     */
+    omit?: OrgManagerOmit<ExtArgs> | null
+    /**
+     * The data used to create many OrgManagers.
+     */
+    data: OrgManagerCreateManyInput | OrgManagerCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgManagerIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OrgManager update
+   */
+  export type OrgManagerUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrgManager
+     */
+    select?: OrgManagerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrgManager
+     */
+    omit?: OrgManagerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgManagerInclude<ExtArgs> | null
+    /**
+     * The data needed to update a OrgManager.
+     */
+    data: XOR<OrgManagerUpdateInput, OrgManagerUncheckedUpdateInput>
+    /**
+     * Choose, which OrgManager to update.
+     */
+    where: OrgManagerWhereUniqueInput
+  }
+
+  /**
+   * OrgManager updateMany
+   */
+  export type OrgManagerUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update OrgManagers.
+     */
+    data: XOR<OrgManagerUpdateManyMutationInput, OrgManagerUncheckedUpdateManyInput>
+    /**
+     * Filter which OrgManagers to update
+     */
+    where?: OrgManagerWhereInput
+    /**
+     * Limit how many OrgManagers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * OrgManager updateManyAndReturn
+   */
+  export type OrgManagerUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrgManager
+     */
+    select?: OrgManagerSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrgManager
+     */
+    omit?: OrgManagerOmit<ExtArgs> | null
+    /**
+     * The data used to update OrgManagers.
+     */
+    data: XOR<OrgManagerUpdateManyMutationInput, OrgManagerUncheckedUpdateManyInput>
+    /**
+     * Filter which OrgManagers to update
+     */
+    where?: OrgManagerWhereInput
+    /**
+     * Limit how many OrgManagers to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgManagerIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OrgManager upsert
+   */
+  export type OrgManagerUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrgManager
+     */
+    select?: OrgManagerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrgManager
+     */
+    omit?: OrgManagerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgManagerInclude<ExtArgs> | null
+    /**
+     * The filter to search for the OrgManager to update in case it exists.
+     */
+    where: OrgManagerWhereUniqueInput
+    /**
+     * In case the OrgManager found by the `where` argument doesn't exist, create a new OrgManager with this data.
+     */
+    create: XOR<OrgManagerCreateInput, OrgManagerUncheckedCreateInput>
+    /**
+     * In case the OrgManager was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OrgManagerUpdateInput, OrgManagerUncheckedUpdateInput>
+  }
+
+  /**
+   * OrgManager delete
+   */
+  export type OrgManagerDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrgManager
+     */
+    select?: OrgManagerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrgManager
+     */
+    omit?: OrgManagerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgManagerInclude<ExtArgs> | null
+    /**
+     * Filter which OrgManager to delete.
+     */
+    where: OrgManagerWhereUniqueInput
+  }
+
+  /**
+   * OrgManager deleteMany
+   */
+  export type OrgManagerDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OrgManagers to delete
+     */
+    where?: OrgManagerWhereInput
+    /**
+     * Limit how many OrgManagers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * OrgManager without action
+   */
+  export type OrgManagerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrgManager
+     */
+    select?: OrgManagerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrgManager
+     */
+    omit?: OrgManagerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgManagerInclude<ExtArgs> | null
   }
 
 
@@ -1894,10 +4464,29 @@ export namespace Prisma {
     id: 'id',
     username: 'username',
     password: 'password',
-    email: 'email'
+    email: 'email',
+    role: 'role'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const OrgScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    adminId: 'adminId'
+  };
+
+  export type OrgScalarFieldEnum = (typeof OrgScalarFieldEnum)[keyof typeof OrgScalarFieldEnum]
+
+
+  export const OrgManagerScalarFieldEnum: {
+    id: 'id',
+    orgId: 'orgId',
+    userId: 'userId'
+  };
+
+  export type OrgManagerScalarFieldEnum = (typeof OrgManagerScalarFieldEnum)[keyof typeof OrgManagerScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -1950,6 +4539,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'UserRole'
+   */
+  export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'UserRole[]'
+   */
+  export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1966,99 +4569,306 @@ export namespace Prisma {
    */
 
 
-  export type userWhereInput = {
-    AND?: userWhereInput | userWhereInput[]
-    OR?: userWhereInput[]
-    NOT?: userWhereInput | userWhereInput[]
-    id?: IntFilter<"user"> | number
-    username?: StringFilter<"user"> | string
-    password?: StringFilter<"user"> | string
-    email?: StringFilter<"user"> | string
+  export type UserWhereInput = {
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    id?: IntFilter<"User"> | number
+    username?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    email?: StringFilter<"User"> | string
+    role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
+    orgJoin?: OrgListRelationFilter
+    managerIn?: OrgManagerListRelationFilter
   }
 
-  export type userOrderByWithRelationInput = {
+  export type UserOrderByWithRelationInput = {
     id?: SortOrder
     username?: SortOrder
     password?: SortOrder
     email?: SortOrder
+    role?: SortOrder
+    orgJoin?: OrgOrderByRelationAggregateInput
+    managerIn?: OrgManagerOrderByRelationAggregateInput
   }
 
-  export type userWhereUniqueInput = Prisma.AtLeast<{
+  export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     username?: string
     email?: string
-    AND?: userWhereInput | userWhereInput[]
-    OR?: userWhereInput[]
-    NOT?: userWhereInput | userWhereInput[]
-    password?: StringFilter<"user"> | string
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    password?: StringFilter<"User"> | string
+    role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
+    orgJoin?: OrgListRelationFilter
+    managerIn?: OrgManagerListRelationFilter
   }, "id" | "username" | "email">
 
-  export type userOrderByWithAggregationInput = {
+  export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     username?: SortOrder
     password?: SortOrder
     email?: SortOrder
-    _count?: userCountOrderByAggregateInput
-    _avg?: userAvgOrderByAggregateInput
-    _max?: userMaxOrderByAggregateInput
-    _min?: userMinOrderByAggregateInput
-    _sum?: userSumOrderByAggregateInput
+    role?: SortOrder
+    _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
+    _max?: UserMaxOrderByAggregateInput
+    _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
   }
 
-  export type userScalarWhereWithAggregatesInput = {
-    AND?: userScalarWhereWithAggregatesInput | userScalarWhereWithAggregatesInput[]
-    OR?: userScalarWhereWithAggregatesInput[]
-    NOT?: userScalarWhereWithAggregatesInput | userScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"user"> | number
-    username?: StringWithAggregatesFilter<"user"> | string
-    password?: StringWithAggregatesFilter<"user"> | string
-    email?: StringWithAggregatesFilter<"user"> | string
+  export type UserScalarWhereWithAggregatesInput = {
+    AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    OR?: UserScalarWhereWithAggregatesInput[]
+    NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"User"> | number
+    username?: StringWithAggregatesFilter<"User"> | string
+    password?: StringWithAggregatesFilter<"User"> | string
+    email?: StringWithAggregatesFilter<"User"> | string
+    role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   }
 
-  export type userCreateInput = {
+  export type OrgWhereInput = {
+    AND?: OrgWhereInput | OrgWhereInput[]
+    OR?: OrgWhereInput[]
+    NOT?: OrgWhereInput | OrgWhereInput[]
+    id?: IntFilter<"Org"> | number
+    name?: StringFilter<"Org"> | string
+    adminId?: IntFilter<"Org"> | number
+    admin?: XOR<UserScalarRelationFilter, UserWhereInput>
+    managers?: OrgManagerListRelationFilter
+  }
+
+  export type OrgOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    adminId?: SortOrder
+    admin?: UserOrderByWithRelationInput
+    managers?: OrgManagerOrderByRelationAggregateInput
+  }
+
+  export type OrgWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    name?: string
+    adminId?: number
+    AND?: OrgWhereInput | OrgWhereInput[]
+    OR?: OrgWhereInput[]
+    NOT?: OrgWhereInput | OrgWhereInput[]
+    admin?: XOR<UserScalarRelationFilter, UserWhereInput>
+    managers?: OrgManagerListRelationFilter
+  }, "id" | "name" | "adminId">
+
+  export type OrgOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    adminId?: SortOrder
+    _count?: OrgCountOrderByAggregateInput
+    _avg?: OrgAvgOrderByAggregateInput
+    _max?: OrgMaxOrderByAggregateInput
+    _min?: OrgMinOrderByAggregateInput
+    _sum?: OrgSumOrderByAggregateInput
+  }
+
+  export type OrgScalarWhereWithAggregatesInput = {
+    AND?: OrgScalarWhereWithAggregatesInput | OrgScalarWhereWithAggregatesInput[]
+    OR?: OrgScalarWhereWithAggregatesInput[]
+    NOT?: OrgScalarWhereWithAggregatesInput | OrgScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Org"> | number
+    name?: StringWithAggregatesFilter<"Org"> | string
+    adminId?: IntWithAggregatesFilter<"Org"> | number
+  }
+
+  export type OrgManagerWhereInput = {
+    AND?: OrgManagerWhereInput | OrgManagerWhereInput[]
+    OR?: OrgManagerWhereInput[]
+    NOT?: OrgManagerWhereInput | OrgManagerWhereInput[]
+    id?: IntFilter<"OrgManager"> | number
+    orgId?: IntFilter<"OrgManager"> | number
+    userId?: IntFilter<"OrgManager"> | number
+    org?: XOR<OrgScalarRelationFilter, OrgWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type OrgManagerOrderByWithRelationInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    userId?: SortOrder
+    org?: OrgOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type OrgManagerWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId_orgId?: OrgManagerUserIdOrgIdCompoundUniqueInput
+    AND?: OrgManagerWhereInput | OrgManagerWhereInput[]
+    OR?: OrgManagerWhereInput[]
+    NOT?: OrgManagerWhereInput | OrgManagerWhereInput[]
+    orgId?: IntFilter<"OrgManager"> | number
+    userId?: IntFilter<"OrgManager"> | number
+    org?: XOR<OrgScalarRelationFilter, OrgWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_orgId">
+
+  export type OrgManagerOrderByWithAggregationInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    userId?: SortOrder
+    _count?: OrgManagerCountOrderByAggregateInput
+    _avg?: OrgManagerAvgOrderByAggregateInput
+    _max?: OrgManagerMaxOrderByAggregateInput
+    _min?: OrgManagerMinOrderByAggregateInput
+    _sum?: OrgManagerSumOrderByAggregateInput
+  }
+
+  export type OrgManagerScalarWhereWithAggregatesInput = {
+    AND?: OrgManagerScalarWhereWithAggregatesInput | OrgManagerScalarWhereWithAggregatesInput[]
+    OR?: OrgManagerScalarWhereWithAggregatesInput[]
+    NOT?: OrgManagerScalarWhereWithAggregatesInput | OrgManagerScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"OrgManager"> | number
+    orgId?: IntWithAggregatesFilter<"OrgManager"> | number
+    userId?: IntWithAggregatesFilter<"OrgManager"> | number
+  }
+
+  export type UserCreateInput = {
     username: string
     password: string
     email: string
+    role?: $Enums.UserRole
+    orgJoin?: OrgCreateNestedManyWithoutAdminInput
+    managerIn?: OrgManagerCreateNestedManyWithoutUserInput
   }
 
-  export type userUncheckedCreateInput = {
+  export type UserUncheckedCreateInput = {
     id?: number
     username: string
     password: string
     email: string
+    role?: $Enums.UserRole
+    orgJoin?: OrgUncheckedCreateNestedManyWithoutAdminInput
+    managerIn?: OrgManagerUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type userUpdateInput = {
+  export type UserUpdateInput = {
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    orgJoin?: OrgUpdateManyWithoutAdminNestedInput
+    managerIn?: OrgManagerUpdateManyWithoutUserNestedInput
   }
 
-  export type userUncheckedUpdateInput = {
+  export type UserUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    orgJoin?: OrgUncheckedUpdateManyWithoutAdminNestedInput
+    managerIn?: OrgManagerUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type userCreateManyInput = {
+  export type UserCreateManyInput = {
     id?: number
     username: string
     password: string
     email: string
+    role?: $Enums.UserRole
   }
 
-  export type userUpdateManyMutationInput = {
+  export type UserUpdateManyMutationInput = {
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   }
 
-  export type userUncheckedUpdateManyInput = {
+  export type UserUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  }
+
+  export type OrgCreateInput = {
+    name: string
+    admin: UserCreateNestedOneWithoutOrgJoinInput
+    managers?: OrgManagerCreateNestedManyWithoutOrgInput
+  }
+
+  export type OrgUncheckedCreateInput = {
+    id?: number
+    name: string
+    adminId: number
+    managers?: OrgManagerUncheckedCreateNestedManyWithoutOrgInput
+  }
+
+  export type OrgUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    admin?: UserUpdateOneRequiredWithoutOrgJoinNestedInput
+    managers?: OrgManagerUpdateManyWithoutOrgNestedInput
+  }
+
+  export type OrgUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    adminId?: IntFieldUpdateOperationsInput | number
+    managers?: OrgManagerUncheckedUpdateManyWithoutOrgNestedInput
+  }
+
+  export type OrgCreateManyInput = {
+    id?: number
+    name: string
+    adminId: number
+  }
+
+  export type OrgUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type OrgUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    adminId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type OrgManagerCreateInput = {
+    org: OrgCreateNestedOneWithoutManagersInput
+    user: UserCreateNestedOneWithoutManagerInInput
+  }
+
+  export type OrgManagerUncheckedCreateInput = {
+    id?: number
+    orgId: number
+    userId: number
+  }
+
+  export type OrgManagerUpdateInput = {
+    org?: OrgUpdateOneRequiredWithoutManagersNestedInput
+    user?: UserUpdateOneRequiredWithoutManagerInNestedInput
+  }
+
+  export type OrgManagerUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    orgId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type OrgManagerCreateManyInput = {
+    id?: number
+    orgId: number
+    userId: number
+  }
+
+  export type OrgManagerUpdateManyMutationInput = {
+
+  }
+
+  export type OrgManagerUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    orgId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -2087,32 +4897,62 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type userCountOrderByAggregateInput = {
+  export type EnumUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
+  }
+
+  export type OrgListRelationFilter = {
+    every?: OrgWhereInput
+    some?: OrgWhereInput
+    none?: OrgWhereInput
+  }
+
+  export type OrgManagerListRelationFilter = {
+    every?: OrgManagerWhereInput
+    some?: OrgManagerWhereInput
+    none?: OrgManagerWhereInput
+  }
+
+  export type OrgOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OrgManagerOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     username?: SortOrder
     password?: SortOrder
     email?: SortOrder
+    role?: SortOrder
   }
 
-  export type userAvgOrderByAggregateInput = {
+  export type UserAvgOrderByAggregateInput = {
     id?: SortOrder
   }
 
-  export type userMaxOrderByAggregateInput = {
-    id?: SortOrder
-    username?: SortOrder
-    password?: SortOrder
-    email?: SortOrder
-  }
-
-  export type userMinOrderByAggregateInput = {
+  export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
     username?: SortOrder
     password?: SortOrder
     email?: SortOrder
+    role?: SortOrder
   }
 
-  export type userSumOrderByAggregateInput = {
+  export type UserMinOrderByAggregateInput = {
+    id?: SortOrder
+    username?: SortOrder
+    password?: SortOrder
+    email?: SortOrder
+    role?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
     id?: SortOrder
   }
 
@@ -2150,8 +4990,151 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumUserRoleFilter<$PrismaModel>
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type OrgCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    adminId?: SortOrder
+  }
+
+  export type OrgAvgOrderByAggregateInput = {
+    id?: SortOrder
+    adminId?: SortOrder
+  }
+
+  export type OrgMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    adminId?: SortOrder
+  }
+
+  export type OrgMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    adminId?: SortOrder
+  }
+
+  export type OrgSumOrderByAggregateInput = {
+    id?: SortOrder
+    adminId?: SortOrder
+  }
+
+  export type OrgScalarRelationFilter = {
+    is?: OrgWhereInput
+    isNot?: OrgWhereInput
+  }
+
+  export type OrgManagerUserIdOrgIdCompoundUniqueInput = {
+    userId: number
+    orgId: number
+  }
+
+  export type OrgManagerCountOrderByAggregateInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type OrgManagerAvgOrderByAggregateInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type OrgManagerMaxOrderByAggregateInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type OrgManagerMinOrderByAggregateInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type OrgManagerSumOrderByAggregateInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type OrgCreateNestedManyWithoutAdminInput = {
+    create?: XOR<OrgCreateWithoutAdminInput, OrgUncheckedCreateWithoutAdminInput> | OrgCreateWithoutAdminInput[] | OrgUncheckedCreateWithoutAdminInput[]
+    connectOrCreate?: OrgCreateOrConnectWithoutAdminInput | OrgCreateOrConnectWithoutAdminInput[]
+    createMany?: OrgCreateManyAdminInputEnvelope
+    connect?: OrgWhereUniqueInput | OrgWhereUniqueInput[]
+  }
+
+  export type OrgManagerCreateNestedManyWithoutUserInput = {
+    create?: XOR<OrgManagerCreateWithoutUserInput, OrgManagerUncheckedCreateWithoutUserInput> | OrgManagerCreateWithoutUserInput[] | OrgManagerUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: OrgManagerCreateOrConnectWithoutUserInput | OrgManagerCreateOrConnectWithoutUserInput[]
+    createMany?: OrgManagerCreateManyUserInputEnvelope
+    connect?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+  }
+
+  export type OrgUncheckedCreateNestedManyWithoutAdminInput = {
+    create?: XOR<OrgCreateWithoutAdminInput, OrgUncheckedCreateWithoutAdminInput> | OrgCreateWithoutAdminInput[] | OrgUncheckedCreateWithoutAdminInput[]
+    connectOrCreate?: OrgCreateOrConnectWithoutAdminInput | OrgCreateOrConnectWithoutAdminInput[]
+    createMany?: OrgCreateManyAdminInputEnvelope
+    connect?: OrgWhereUniqueInput | OrgWhereUniqueInput[]
+  }
+
+  export type OrgManagerUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<OrgManagerCreateWithoutUserInput, OrgManagerUncheckedCreateWithoutUserInput> | OrgManagerCreateWithoutUserInput[] | OrgManagerUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: OrgManagerCreateOrConnectWithoutUserInput | OrgManagerCreateOrConnectWithoutUserInput[]
+    createMany?: OrgManagerCreateManyUserInputEnvelope
+    connect?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type EnumUserRoleFieldUpdateOperationsInput = {
+    set?: $Enums.UserRole
+  }
+
+  export type OrgUpdateManyWithoutAdminNestedInput = {
+    create?: XOR<OrgCreateWithoutAdminInput, OrgUncheckedCreateWithoutAdminInput> | OrgCreateWithoutAdminInput[] | OrgUncheckedCreateWithoutAdminInput[]
+    connectOrCreate?: OrgCreateOrConnectWithoutAdminInput | OrgCreateOrConnectWithoutAdminInput[]
+    upsert?: OrgUpsertWithWhereUniqueWithoutAdminInput | OrgUpsertWithWhereUniqueWithoutAdminInput[]
+    createMany?: OrgCreateManyAdminInputEnvelope
+    set?: OrgWhereUniqueInput | OrgWhereUniqueInput[]
+    disconnect?: OrgWhereUniqueInput | OrgWhereUniqueInput[]
+    delete?: OrgWhereUniqueInput | OrgWhereUniqueInput[]
+    connect?: OrgWhereUniqueInput | OrgWhereUniqueInput[]
+    update?: OrgUpdateWithWhereUniqueWithoutAdminInput | OrgUpdateWithWhereUniqueWithoutAdminInput[]
+    updateMany?: OrgUpdateManyWithWhereWithoutAdminInput | OrgUpdateManyWithWhereWithoutAdminInput[]
+    deleteMany?: OrgScalarWhereInput | OrgScalarWhereInput[]
+  }
+
+  export type OrgManagerUpdateManyWithoutUserNestedInput = {
+    create?: XOR<OrgManagerCreateWithoutUserInput, OrgManagerUncheckedCreateWithoutUserInput> | OrgManagerCreateWithoutUserInput[] | OrgManagerUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: OrgManagerCreateOrConnectWithoutUserInput | OrgManagerCreateOrConnectWithoutUserInput[]
+    upsert?: OrgManagerUpsertWithWhereUniqueWithoutUserInput | OrgManagerUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: OrgManagerCreateManyUserInputEnvelope
+    set?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+    disconnect?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+    delete?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+    connect?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+    update?: OrgManagerUpdateWithWhereUniqueWithoutUserInput | OrgManagerUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: OrgManagerUpdateManyWithWhereWithoutUserInput | OrgManagerUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: OrgManagerScalarWhereInput | OrgManagerScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -2160,6 +5143,118 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type OrgUncheckedUpdateManyWithoutAdminNestedInput = {
+    create?: XOR<OrgCreateWithoutAdminInput, OrgUncheckedCreateWithoutAdminInput> | OrgCreateWithoutAdminInput[] | OrgUncheckedCreateWithoutAdminInput[]
+    connectOrCreate?: OrgCreateOrConnectWithoutAdminInput | OrgCreateOrConnectWithoutAdminInput[]
+    upsert?: OrgUpsertWithWhereUniqueWithoutAdminInput | OrgUpsertWithWhereUniqueWithoutAdminInput[]
+    createMany?: OrgCreateManyAdminInputEnvelope
+    set?: OrgWhereUniqueInput | OrgWhereUniqueInput[]
+    disconnect?: OrgWhereUniqueInput | OrgWhereUniqueInput[]
+    delete?: OrgWhereUniqueInput | OrgWhereUniqueInput[]
+    connect?: OrgWhereUniqueInput | OrgWhereUniqueInput[]
+    update?: OrgUpdateWithWhereUniqueWithoutAdminInput | OrgUpdateWithWhereUniqueWithoutAdminInput[]
+    updateMany?: OrgUpdateManyWithWhereWithoutAdminInput | OrgUpdateManyWithWhereWithoutAdminInput[]
+    deleteMany?: OrgScalarWhereInput | OrgScalarWhereInput[]
+  }
+
+  export type OrgManagerUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<OrgManagerCreateWithoutUserInput, OrgManagerUncheckedCreateWithoutUserInput> | OrgManagerCreateWithoutUserInput[] | OrgManagerUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: OrgManagerCreateOrConnectWithoutUserInput | OrgManagerCreateOrConnectWithoutUserInput[]
+    upsert?: OrgManagerUpsertWithWhereUniqueWithoutUserInput | OrgManagerUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: OrgManagerCreateManyUserInputEnvelope
+    set?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+    disconnect?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+    delete?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+    connect?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+    update?: OrgManagerUpdateWithWhereUniqueWithoutUserInput | OrgManagerUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: OrgManagerUpdateManyWithWhereWithoutUserInput | OrgManagerUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: OrgManagerScalarWhereInput | OrgManagerScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutOrgJoinInput = {
+    create?: XOR<UserCreateWithoutOrgJoinInput, UserUncheckedCreateWithoutOrgJoinInput>
+    connectOrCreate?: UserCreateOrConnectWithoutOrgJoinInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type OrgManagerCreateNestedManyWithoutOrgInput = {
+    create?: XOR<OrgManagerCreateWithoutOrgInput, OrgManagerUncheckedCreateWithoutOrgInput> | OrgManagerCreateWithoutOrgInput[] | OrgManagerUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: OrgManagerCreateOrConnectWithoutOrgInput | OrgManagerCreateOrConnectWithoutOrgInput[]
+    createMany?: OrgManagerCreateManyOrgInputEnvelope
+    connect?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+  }
+
+  export type OrgManagerUncheckedCreateNestedManyWithoutOrgInput = {
+    create?: XOR<OrgManagerCreateWithoutOrgInput, OrgManagerUncheckedCreateWithoutOrgInput> | OrgManagerCreateWithoutOrgInput[] | OrgManagerUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: OrgManagerCreateOrConnectWithoutOrgInput | OrgManagerCreateOrConnectWithoutOrgInput[]
+    createMany?: OrgManagerCreateManyOrgInputEnvelope
+    connect?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutOrgJoinNestedInput = {
+    create?: XOR<UserCreateWithoutOrgJoinInput, UserUncheckedCreateWithoutOrgJoinInput>
+    connectOrCreate?: UserCreateOrConnectWithoutOrgJoinInput
+    upsert?: UserUpsertWithoutOrgJoinInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutOrgJoinInput, UserUpdateWithoutOrgJoinInput>, UserUncheckedUpdateWithoutOrgJoinInput>
+  }
+
+  export type OrgManagerUpdateManyWithoutOrgNestedInput = {
+    create?: XOR<OrgManagerCreateWithoutOrgInput, OrgManagerUncheckedCreateWithoutOrgInput> | OrgManagerCreateWithoutOrgInput[] | OrgManagerUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: OrgManagerCreateOrConnectWithoutOrgInput | OrgManagerCreateOrConnectWithoutOrgInput[]
+    upsert?: OrgManagerUpsertWithWhereUniqueWithoutOrgInput | OrgManagerUpsertWithWhereUniqueWithoutOrgInput[]
+    createMany?: OrgManagerCreateManyOrgInputEnvelope
+    set?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+    disconnect?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+    delete?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+    connect?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+    update?: OrgManagerUpdateWithWhereUniqueWithoutOrgInput | OrgManagerUpdateWithWhereUniqueWithoutOrgInput[]
+    updateMany?: OrgManagerUpdateManyWithWhereWithoutOrgInput | OrgManagerUpdateManyWithWhereWithoutOrgInput[]
+    deleteMany?: OrgManagerScalarWhereInput | OrgManagerScalarWhereInput[]
+  }
+
+  export type OrgManagerUncheckedUpdateManyWithoutOrgNestedInput = {
+    create?: XOR<OrgManagerCreateWithoutOrgInput, OrgManagerUncheckedCreateWithoutOrgInput> | OrgManagerCreateWithoutOrgInput[] | OrgManagerUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: OrgManagerCreateOrConnectWithoutOrgInput | OrgManagerCreateOrConnectWithoutOrgInput[]
+    upsert?: OrgManagerUpsertWithWhereUniqueWithoutOrgInput | OrgManagerUpsertWithWhereUniqueWithoutOrgInput[]
+    createMany?: OrgManagerCreateManyOrgInputEnvelope
+    set?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+    disconnect?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+    delete?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+    connect?: OrgManagerWhereUniqueInput | OrgManagerWhereUniqueInput[]
+    update?: OrgManagerUpdateWithWhereUniqueWithoutOrgInput | OrgManagerUpdateWithWhereUniqueWithoutOrgInput[]
+    updateMany?: OrgManagerUpdateManyWithWhereWithoutOrgInput | OrgManagerUpdateManyWithWhereWithoutOrgInput[]
+    deleteMany?: OrgManagerScalarWhereInput | OrgManagerScalarWhereInput[]
+  }
+
+  export type OrgCreateNestedOneWithoutManagersInput = {
+    create?: XOR<OrgCreateWithoutManagersInput, OrgUncheckedCreateWithoutManagersInput>
+    connectOrCreate?: OrgCreateOrConnectWithoutManagersInput
+    connect?: OrgWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutManagerInInput = {
+    create?: XOR<UserCreateWithoutManagerInInput, UserUncheckedCreateWithoutManagerInInput>
+    connectOrCreate?: UserCreateOrConnectWithoutManagerInInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type OrgUpdateOneRequiredWithoutManagersNestedInput = {
+    create?: XOR<OrgCreateWithoutManagersInput, OrgUncheckedCreateWithoutManagersInput>
+    connectOrCreate?: OrgCreateOrConnectWithoutManagersInput
+    upsert?: OrgUpsertWithoutManagersInput
+    connect?: OrgWhereUniqueInput
+    update?: XOR<XOR<OrgUpdateToOneWithWhereWithoutManagersInput, OrgUpdateWithoutManagersInput>, OrgUncheckedUpdateWithoutManagersInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutManagerInNestedInput = {
+    create?: XOR<UserCreateWithoutManagerInInput, UserUncheckedCreateWithoutManagerInInput>
+    connectOrCreate?: UserCreateOrConnectWithoutManagerInInput
+    upsert?: UserUpsertWithoutManagerInInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutManagerInInput, UserUpdateWithoutManagerInInput>, UserUncheckedUpdateWithoutManagerInInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -2185,6 +5280,13 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -2229,6 +5331,338 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumUserRoleFilter<$PrismaModel>
+  }
+
+  export type OrgCreateWithoutAdminInput = {
+    name: string
+    managers?: OrgManagerCreateNestedManyWithoutOrgInput
+  }
+
+  export type OrgUncheckedCreateWithoutAdminInput = {
+    id?: number
+    name: string
+    managers?: OrgManagerUncheckedCreateNestedManyWithoutOrgInput
+  }
+
+  export type OrgCreateOrConnectWithoutAdminInput = {
+    where: OrgWhereUniqueInput
+    create: XOR<OrgCreateWithoutAdminInput, OrgUncheckedCreateWithoutAdminInput>
+  }
+
+  export type OrgCreateManyAdminInputEnvelope = {
+    data: OrgCreateManyAdminInput | OrgCreateManyAdminInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OrgManagerCreateWithoutUserInput = {
+    org: OrgCreateNestedOneWithoutManagersInput
+  }
+
+  export type OrgManagerUncheckedCreateWithoutUserInput = {
+    id?: number
+    orgId: number
+  }
+
+  export type OrgManagerCreateOrConnectWithoutUserInput = {
+    where: OrgManagerWhereUniqueInput
+    create: XOR<OrgManagerCreateWithoutUserInput, OrgManagerUncheckedCreateWithoutUserInput>
+  }
+
+  export type OrgManagerCreateManyUserInputEnvelope = {
+    data: OrgManagerCreateManyUserInput | OrgManagerCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OrgUpsertWithWhereUniqueWithoutAdminInput = {
+    where: OrgWhereUniqueInput
+    update: XOR<OrgUpdateWithoutAdminInput, OrgUncheckedUpdateWithoutAdminInput>
+    create: XOR<OrgCreateWithoutAdminInput, OrgUncheckedCreateWithoutAdminInput>
+  }
+
+  export type OrgUpdateWithWhereUniqueWithoutAdminInput = {
+    where: OrgWhereUniqueInput
+    data: XOR<OrgUpdateWithoutAdminInput, OrgUncheckedUpdateWithoutAdminInput>
+  }
+
+  export type OrgUpdateManyWithWhereWithoutAdminInput = {
+    where: OrgScalarWhereInput
+    data: XOR<OrgUpdateManyMutationInput, OrgUncheckedUpdateManyWithoutAdminInput>
+  }
+
+  export type OrgScalarWhereInput = {
+    AND?: OrgScalarWhereInput | OrgScalarWhereInput[]
+    OR?: OrgScalarWhereInput[]
+    NOT?: OrgScalarWhereInput | OrgScalarWhereInput[]
+    id?: IntFilter<"Org"> | number
+    name?: StringFilter<"Org"> | string
+    adminId?: IntFilter<"Org"> | number
+  }
+
+  export type OrgManagerUpsertWithWhereUniqueWithoutUserInput = {
+    where: OrgManagerWhereUniqueInput
+    update: XOR<OrgManagerUpdateWithoutUserInput, OrgManagerUncheckedUpdateWithoutUserInput>
+    create: XOR<OrgManagerCreateWithoutUserInput, OrgManagerUncheckedCreateWithoutUserInput>
+  }
+
+  export type OrgManagerUpdateWithWhereUniqueWithoutUserInput = {
+    where: OrgManagerWhereUniqueInput
+    data: XOR<OrgManagerUpdateWithoutUserInput, OrgManagerUncheckedUpdateWithoutUserInput>
+  }
+
+  export type OrgManagerUpdateManyWithWhereWithoutUserInput = {
+    where: OrgManagerScalarWhereInput
+    data: XOR<OrgManagerUpdateManyMutationInput, OrgManagerUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type OrgManagerScalarWhereInput = {
+    AND?: OrgManagerScalarWhereInput | OrgManagerScalarWhereInput[]
+    OR?: OrgManagerScalarWhereInput[]
+    NOT?: OrgManagerScalarWhereInput | OrgManagerScalarWhereInput[]
+    id?: IntFilter<"OrgManager"> | number
+    orgId?: IntFilter<"OrgManager"> | number
+    userId?: IntFilter<"OrgManager"> | number
+  }
+
+  export type UserCreateWithoutOrgJoinInput = {
+    username: string
+    password: string
+    email: string
+    role?: $Enums.UserRole
+    managerIn?: OrgManagerCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutOrgJoinInput = {
+    id?: number
+    username: string
+    password: string
+    email: string
+    role?: $Enums.UserRole
+    managerIn?: OrgManagerUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutOrgJoinInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutOrgJoinInput, UserUncheckedCreateWithoutOrgJoinInput>
+  }
+
+  export type OrgManagerCreateWithoutOrgInput = {
+    user: UserCreateNestedOneWithoutManagerInInput
+  }
+
+  export type OrgManagerUncheckedCreateWithoutOrgInput = {
+    id?: number
+    userId: number
+  }
+
+  export type OrgManagerCreateOrConnectWithoutOrgInput = {
+    where: OrgManagerWhereUniqueInput
+    create: XOR<OrgManagerCreateWithoutOrgInput, OrgManagerUncheckedCreateWithoutOrgInput>
+  }
+
+  export type OrgManagerCreateManyOrgInputEnvelope = {
+    data: OrgManagerCreateManyOrgInput | OrgManagerCreateManyOrgInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutOrgJoinInput = {
+    update: XOR<UserUpdateWithoutOrgJoinInput, UserUncheckedUpdateWithoutOrgJoinInput>
+    create: XOR<UserCreateWithoutOrgJoinInput, UserUncheckedCreateWithoutOrgJoinInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutOrgJoinInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutOrgJoinInput, UserUncheckedUpdateWithoutOrgJoinInput>
+  }
+
+  export type UserUpdateWithoutOrgJoinInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    managerIn?: OrgManagerUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutOrgJoinInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    managerIn?: OrgManagerUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type OrgManagerUpsertWithWhereUniqueWithoutOrgInput = {
+    where: OrgManagerWhereUniqueInput
+    update: XOR<OrgManagerUpdateWithoutOrgInput, OrgManagerUncheckedUpdateWithoutOrgInput>
+    create: XOR<OrgManagerCreateWithoutOrgInput, OrgManagerUncheckedCreateWithoutOrgInput>
+  }
+
+  export type OrgManagerUpdateWithWhereUniqueWithoutOrgInput = {
+    where: OrgManagerWhereUniqueInput
+    data: XOR<OrgManagerUpdateWithoutOrgInput, OrgManagerUncheckedUpdateWithoutOrgInput>
+  }
+
+  export type OrgManagerUpdateManyWithWhereWithoutOrgInput = {
+    where: OrgManagerScalarWhereInput
+    data: XOR<OrgManagerUpdateManyMutationInput, OrgManagerUncheckedUpdateManyWithoutOrgInput>
+  }
+
+  export type OrgCreateWithoutManagersInput = {
+    name: string
+    admin: UserCreateNestedOneWithoutOrgJoinInput
+  }
+
+  export type OrgUncheckedCreateWithoutManagersInput = {
+    id?: number
+    name: string
+    adminId: number
+  }
+
+  export type OrgCreateOrConnectWithoutManagersInput = {
+    where: OrgWhereUniqueInput
+    create: XOR<OrgCreateWithoutManagersInput, OrgUncheckedCreateWithoutManagersInput>
+  }
+
+  export type UserCreateWithoutManagerInInput = {
+    username: string
+    password: string
+    email: string
+    role?: $Enums.UserRole
+    orgJoin?: OrgCreateNestedManyWithoutAdminInput
+  }
+
+  export type UserUncheckedCreateWithoutManagerInInput = {
+    id?: number
+    username: string
+    password: string
+    email: string
+    role?: $Enums.UserRole
+    orgJoin?: OrgUncheckedCreateNestedManyWithoutAdminInput
+  }
+
+  export type UserCreateOrConnectWithoutManagerInInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutManagerInInput, UserUncheckedCreateWithoutManagerInInput>
+  }
+
+  export type OrgUpsertWithoutManagersInput = {
+    update: XOR<OrgUpdateWithoutManagersInput, OrgUncheckedUpdateWithoutManagersInput>
+    create: XOR<OrgCreateWithoutManagersInput, OrgUncheckedCreateWithoutManagersInput>
+    where?: OrgWhereInput
+  }
+
+  export type OrgUpdateToOneWithWhereWithoutManagersInput = {
+    where?: OrgWhereInput
+    data: XOR<OrgUpdateWithoutManagersInput, OrgUncheckedUpdateWithoutManagersInput>
+  }
+
+  export type OrgUpdateWithoutManagersInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    admin?: UserUpdateOneRequiredWithoutOrgJoinNestedInput
+  }
+
+  export type OrgUncheckedUpdateWithoutManagersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    adminId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserUpsertWithoutManagerInInput = {
+    update: XOR<UserUpdateWithoutManagerInInput, UserUncheckedUpdateWithoutManagerInInput>
+    create: XOR<UserCreateWithoutManagerInInput, UserUncheckedCreateWithoutManagerInInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutManagerInInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutManagerInInput, UserUncheckedUpdateWithoutManagerInInput>
+  }
+
+  export type UserUpdateWithoutManagerInInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    orgJoin?: OrgUpdateManyWithoutAdminNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutManagerInInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    orgJoin?: OrgUncheckedUpdateManyWithoutAdminNestedInput
+  }
+
+  export type OrgCreateManyAdminInput = {
+    id?: number
+    name: string
+  }
+
+  export type OrgManagerCreateManyUserInput = {
+    id?: number
+    orgId: number
+  }
+
+  export type OrgUpdateWithoutAdminInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    managers?: OrgManagerUpdateManyWithoutOrgNestedInput
+  }
+
+  export type OrgUncheckedUpdateWithoutAdminInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    managers?: OrgManagerUncheckedUpdateManyWithoutOrgNestedInput
+  }
+
+  export type OrgUncheckedUpdateManyWithoutAdminInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type OrgManagerUpdateWithoutUserInput = {
+    org?: OrgUpdateOneRequiredWithoutManagersNestedInput
+  }
+
+  export type OrgManagerUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    orgId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type OrgManagerUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    orgId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type OrgManagerCreateManyOrgInput = {
+    id?: number
+    userId: number
+  }
+
+  export type OrgManagerUpdateWithoutOrgInput = {
+    user?: UserUpdateOneRequiredWithoutManagerInNestedInput
+  }
+
+  export type OrgManagerUncheckedUpdateWithoutOrgInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type OrgManagerUncheckedUpdateManyWithoutOrgInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
   }
 
 

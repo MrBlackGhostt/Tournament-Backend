@@ -7,10 +7,20 @@ import cookieParser from "cookie-parser";
 import { generateToken } from "./utils/tokenVerify.js";
 import { checkPassword, hashPassword } from "./utils/passwordHash.js";
 import { errorHandler } from "./middleware/error.js";
+import { limiter } from "./middleware/rateLimit.js";
+import { speedLimiter } from "./middleware/slowDown.js";
+
 const app = Express();
 const prisma = new PrismaClient();
+//middleware to limit the no of req
+app.use(limiter);
 
+//Middleware to delay the res send after each req
+app.use(speedLimiter);
+
+//middleware to parse the cookie
 app.use(cookieParser());
+//middle to the parese the req data
 app.use(Express.json());
 
 app.get("/", async (req: Request, res: Response) => {

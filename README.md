@@ -29,3 +29,7 @@ pnpm add nodemon
 "dev": "nodemon --watch src --ext ts --exec
 
 <!-- Put this in dev script as wanted to run by nodemon and put the --exec ts so it look for extension for ts file for nodemon to watch as by default the nodemon do not watch the ts file  -->
+
+<!-- USe the Express-rate-limiter to put the rate limit -->
+
+pnpm add express-rate-limit

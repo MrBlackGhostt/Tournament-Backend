@@ -14,9 +14,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user{
+enum UserRole {
+  ADMIN
+  MANAGER
+  MODERATOR
+  ACE
+  USER
+}
+
+
+model User{
   id Int @id @default(autoincrement())
   username String  @unique @db.VarChar(255)
   password String  
   email String @unique @db.VarChar(255)
+  role UserRole @default(USER)
+  orgJoin Org[] 
+  managerIn OrgManager[]
+}
+
+model Org {
+id   Int @id @default(autoincrement())
+name String @unique @db.VarChar(255)
+admin User @relation(fields: [adminId], references: [id])
+adminId Int @unique
+managers OrgManager[]
+}
+
+model OrgManager {
+  id Int @id @default(autoincrement())
+  orgId Int 
+  org Org @relation(fields: [orgId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+  userId Int 
+  @@unique([userId, orgId])
 }
