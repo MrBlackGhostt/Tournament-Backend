@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import { generateToken } from "./utils/tokenVerify.js";
 import { checkPassword, hashPassword } from "./utils/passwordHash.js";
-
+import { errorHandler } from "./middleware/error.js";
 const app = Express();
 const prisma = new PrismaClient();
 
@@ -44,9 +44,6 @@ app.post("/signup", async (req: Request, res: Response) => {
     });
   try {
     const hash_password = await hashPassword(password);
-    console.log("🚀 ---------------------------------🚀");
-    console.log("🚀 ~ hash_password:", hash_password);
-    console.log("🚀 ---------------------------------🚀");
 
     if (hash_password) {
       await prisma.user.create({
@@ -67,7 +64,7 @@ app.post("/signup", async (req: Request, res: Response) => {
   }
 });
 
-app.post("/signin", async (req, res) => {
+app.post("/signin", async (req, res, next) => {
   const { username, email, password } = req.body;
 
   console.log(email);
@@ -93,9 +90,6 @@ app.post("/signin", async (req, res) => {
 
     if (foundUser) {
       const passwordVerify = await checkPassword(foundUser.password, password);
-      console.log("🚀 -----------------------------------🚀");
-      console.log("🚀 ~ passwordVerify:", passwordVerify);
-      console.log("🚀 -----------------------------------🚀");
 
       if (!passwordVerify)
         res.status(404).json({ message: "Password is incorrect" });
@@ -133,7 +127,8 @@ app.post("/signin", async (req, res) => {
     }
   } catch (error) {
     console.error("error finding the user", error);
-    res.status(404).send("no user is present here");
+    // res.status(404).send("no user is present here");
+    next(error);
   }
   res.status(200).send("send the token");
 });
@@ -154,6 +149,8 @@ app.get("/auth", async (req, res) => {
   }
   res.status(404).send("notverify");
 });
+
+app.use(errorHandler);
 
 app.listen("3000", () => {
   console.log("Listening on port 3000");
