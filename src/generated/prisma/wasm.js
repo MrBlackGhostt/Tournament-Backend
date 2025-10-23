@@ -92,12 +92,9 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.UserScalarFieldEnum = {
+exports.Prisma.GameScalarFieldEnum = {
   id: 'id',
-  username: 'username',
-  password: 'password',
-  email: 'email',
-  role: 'role'
+  gameName: 'gameName'
 };
 
 exports.Prisma.OrgScalarFieldEnum = {
@@ -110,6 +107,37 @@ exports.Prisma.OrgManagerScalarFieldEnum = {
   id: 'id',
   orgId: 'orgId',
   userId: 'userId'
+};
+
+exports.Prisma.ProfileScalarFieldEnum = {
+  userId: 'userId',
+  userTeam: 'userTeam'
+};
+
+exports.Prisma.TournamentScalarFieldEnum = {
+  id: 'id',
+  noOfTeam: 'noOfTeam',
+  gameName: 'gameName',
+  noOfPlayerInTeam: 'noOfPlayerInTeam'
+};
+
+exports.Prisma.TeamScalarFieldEnum = {
+  id: 'id',
+  noOfPlayer: 'noOfPlayer'
+};
+
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  username: 'username',
+  password: 'password',
+  email: 'email',
+  role: 'role'
+};
+
+exports.Prisma.UserGameScalarFieldEnum = {
+  gameName: 'gameName',
+  userGameId: 'userGameId',
+  userIgn: 'userIgn'
 };
 
 exports.Prisma.SortOrder = {
@@ -130,9 +158,14 @@ exports.UserRole = exports.$Enums.UserRole = {
 };
 
 exports.Prisma.ModelName = {
-  User: 'User',
+  Game: 'Game',
   Org: 'Org',
-  OrgManager: 'OrgManager'
+  OrgManager: 'OrgManager',
+  Profile: 'Profile',
+  Tournament: 'Tournament',
+  Team: 'Team',
+  User: 'User',
+  UserGame: 'UserGame'
 };
 /**
  * Create the Client
@@ -181,13 +214,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum UserRole {\n  ADMIN\n  MANAGER\n  MODERATOR\n  ACE\n  USER\n}\n\nmodel User {\n  id        Int          @id @default(autoincrement())\n  username  String       @unique @db.VarChar(255)\n  password  String\n  email     String       @unique @db.VarChar(255)\n  role      UserRole     @default(USER)\n  orgJoin   Org[]\n  managerIn OrgManager[]\n}\n\nmodel Org {\n  id       Int          @id @default(autoincrement())\n  name     String       @unique @db.VarChar(255)\n  admin    User         @relation(fields: [adminId], references: [id])\n  adminId  Int          @unique\n  managers OrgManager[]\n}\n\nmodel OrgManager {\n  id     Int  @id @default(autoincrement())\n  orgId  Int\n  org    Org  @relation(fields: [orgId], references: [id])\n  user   User @relation(fields: [userId], references: [id])\n  userId Int\n\n  @@unique([userId, orgId])\n}\n",
-  "inlineSchemaHash": "5755b1a963399d4383b0a24d6321383abad8c1bcb792b5b55ea7e99b4c10dd79",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum UserRole {\n  ADMIN\n  MANAGER\n  MODERATOR\n  ACE\n  USER\n}\n\nmodel Game {\n  id                String       @id @default(cuid())\n  gameName          String       @unique\n  onGoingTournament Tournament[]\n  users             UserGame[]\n}\n\nmodel Org {\n  id       String       @id @default(cuid())\n  name     String       @unique @db.VarChar(255)\n  admin    User         @relation(fields: [adminId], references: [id])\n  adminId  String       @unique\n  managers OrgManager[]\n}\n\nmodel OrgManager {\n  id     String @id @default(cuid())\n  orgId  String\n  org    Org    @relation(fields: [orgId], references: [id])\n  user   User   @relation(fields: [userId], references: [id])\n  userId String\n\n  @@unique([userId, orgId])\n}\n\nmodel Profile {\n  user     User       @relation(fields: [userId], references: [id])\n  userId   String     @unique\n  gamePlay UserGame[]\n  teams    Team       @relation(fields: [userTeam], references: [id])\n  userTeam String\n}\n\n// TOurnament that the user join & the Org Create\nmodel Tournament {\n  id               String @id @default(cuid())\n  noOfTeam         Int\n  game             Game   @relation(fields: [gameName], references: [gameName])\n  gameName         String\n  noOfPlayerInTeam Int\n  teams            Team[]\n}\n\n//Team for the User Join\nmodel Team {\n  id          String       @id @default(cuid())\n  noOfPlayer  Int\n  users       Profile[]\n  tournaments Tournament[]\n}\n\nmodel User {\n  id        String       @id @default(cuid())\n  username  String       @unique @db.VarChar(255)\n  password  String\n  email     String       @unique @db.VarChar(255)\n  managerIn OrgManager[]\n  orgJoin   Org[]\n  profile   Profile?\n  role      UserRole     @default(USER)\n}\n\nmodel UserGame {\n  name       Game    @relation(fields: [gameName], references: [gameName])\n  gameName   String  @unique\n  userGameId String  @unique\n  ign        Profile @relation(fields: [userIgn], references: [userId])\n  userIgn    String  @unique\n}\n",
+  "inlineSchemaHash": "2ae721c6e6a02c687c7be346c17411ab35f838c026a272dda9b234e8e29d9a4b",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"UserRole\"},{\"name\":\"orgJoin\",\"kind\":\"object\",\"type\":\"Org\",\"relationName\":\"OrgToUser\"},{\"name\":\"managerIn\",\"kind\":\"object\",\"type\":\"OrgManager\",\"relationName\":\"OrgManagerToUser\"}],\"dbName\":null},\"Org\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"admin\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"OrgToUser\"},{\"name\":\"adminId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"managers\",\"kind\":\"object\",\"type\":\"OrgManager\",\"relationName\":\"OrgToOrgManager\"}],\"dbName\":null},\"OrgManager\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"orgId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"org\",\"kind\":\"object\",\"type\":\"Org\",\"relationName\":\"OrgToOrgManager\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"OrgManagerToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Game\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"gameName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"onGoingTournament\",\"kind\":\"object\",\"type\":\"Tournament\",\"relationName\":\"GameToTournament\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"UserGame\",\"relationName\":\"GameToUserGame\"}],\"dbName\":null},\"Org\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"admin\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"OrgToUser\"},{\"name\":\"adminId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"managers\",\"kind\":\"object\",\"type\":\"OrgManager\",\"relationName\":\"OrgToOrgManager\"}],\"dbName\":null},\"OrgManager\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"orgId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"org\",\"kind\":\"object\",\"type\":\"Org\",\"relationName\":\"OrgToOrgManager\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"OrgManagerToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"Profile\":{\"fields\":[{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ProfileToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"gamePlay\",\"kind\":\"object\",\"type\":\"UserGame\",\"relationName\":\"ProfileToUserGame\"},{\"name\":\"teams\",\"kind\":\"object\",\"type\":\"Team\",\"relationName\":\"ProfileToTeam\"},{\"name\":\"userTeam\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"Tournament\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"noOfTeam\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"game\",\"kind\":\"object\",\"type\":\"Game\",\"relationName\":\"GameToTournament\"},{\"name\":\"gameName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"noOfPlayerInTeam\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"teams\",\"kind\":\"object\",\"type\":\"Team\",\"relationName\":\"TeamToTournament\"}],\"dbName\":null},\"Team\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"noOfPlayer\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"Profile\",\"relationName\":\"ProfileToTeam\"},{\"name\":\"tournaments\",\"kind\":\"object\",\"type\":\"Tournament\",\"relationName\":\"TeamToTournament\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"managerIn\",\"kind\":\"object\",\"type\":\"OrgManager\",\"relationName\":\"OrgManagerToUser\"},{\"name\":\"orgJoin\",\"kind\":\"object\",\"type\":\"Org\",\"relationName\":\"OrgToUser\"},{\"name\":\"profile\",\"kind\":\"object\",\"type\":\"Profile\",\"relationName\":\"ProfileToUser\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"UserRole\"}],\"dbName\":null},\"UserGame\":{\"fields\":[{\"name\":\"name\",\"kind\":\"object\",\"type\":\"Game\",\"relationName\":\"GameToUserGame\"},{\"name\":\"gameName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userGameId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ign\",\"kind\":\"object\",\"type\":\"Profile\",\"relationName\":\"ProfileToUserGame\"},{\"name\":\"userIgn\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

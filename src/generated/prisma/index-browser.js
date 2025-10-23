@@ -120,12 +120,9 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.UserScalarFieldEnum = {
+exports.Prisma.GameScalarFieldEnum = {
   id: 'id',
-  username: 'username',
-  password: 'password',
-  email: 'email',
-  role: 'role'
+  gameName: 'gameName'
 };
 
 exports.Prisma.OrgScalarFieldEnum = {
@@ -138,6 +135,37 @@ exports.Prisma.OrgManagerScalarFieldEnum = {
   id: 'id',
   orgId: 'orgId',
   userId: 'userId'
+};
+
+exports.Prisma.ProfileScalarFieldEnum = {
+  userId: 'userId',
+  userTeam: 'userTeam'
+};
+
+exports.Prisma.TournamentScalarFieldEnum = {
+  id: 'id',
+  noOfTeam: 'noOfTeam',
+  gameName: 'gameName',
+  noOfPlayerInTeam: 'noOfPlayerInTeam'
+};
+
+exports.Prisma.TeamScalarFieldEnum = {
+  id: 'id',
+  noOfPlayer: 'noOfPlayer'
+};
+
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  username: 'username',
+  password: 'password',
+  email: 'email',
+  role: 'role'
+};
+
+exports.Prisma.UserGameScalarFieldEnum = {
+  gameName: 'gameName',
+  userGameId: 'userGameId',
+  userIgn: 'userIgn'
 };
 
 exports.Prisma.SortOrder = {
@@ -158,9 +186,14 @@ exports.UserRole = exports.$Enums.UserRole = {
 };
 
 exports.Prisma.ModelName = {
-  User: 'User',
+  Game: 'Game',
   Org: 'Org',
-  OrgManager: 'OrgManager'
+  OrgManager: 'OrgManager',
+  Profile: 'Profile',
+  Tournament: 'Tournament',
+  Team: 'Team',
+  User: 'User',
+  UserGame: 'UserGame'
 };
 
 /**

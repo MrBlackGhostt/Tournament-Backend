@@ -22,30 +22,72 @@ enum UserRole {
   USER
 }
 
-model User {
-  id        Int          @id @default(autoincrement())
-  username  String       @unique @db.VarChar(255)
-  password  String
-  email     String       @unique @db.VarChar(255)
-  role      UserRole     @default(USER)
-  orgJoin   Org[]
-  managerIn OrgManager[]
+model Game {
+  id                String       @id @default(cuid())
+  gameName          String       @unique
+  onGoingTournament Tournament[]
+  users             UserGame[]
 }
 
 model Org {
-  id       Int          @id @default(autoincrement())
+  id       String       @id @default(cuid())
   name     String       @unique @db.VarChar(255)
   admin    User         @relation(fields: [adminId], references: [id])
-  adminId  Int          @unique
+  adminId  String       @unique
   managers OrgManager[]
 }
 
 model OrgManager {
-  id     Int  @id @default(autoincrement())
-  orgId  Int
-  org    Org  @relation(fields: [orgId], references: [id])
-  user   User @relation(fields: [userId], references: [id])
-  userId Int
+  id     String @id @default(cuid())
+  orgId  String
+  org    Org    @relation(fields: [orgId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 
   @@unique([userId, orgId])
+}
+
+model Profile {
+  user     User       @relation(fields: [userId], references: [id])
+  userId   String     @unique
+  gamePlay UserGame[]
+  teams    Team       @relation(fields: [userTeam], references: [id])
+  userTeam String
+}
+
+// TOurnament that the user join & the Org Create
+model Tournament {
+  id               String @id @default(cuid())
+  noOfTeam         Int
+  game             Game   @relation(fields: [gameName], references: [gameName])
+  gameName         String
+  noOfPlayerInTeam Int
+  teams            Team[]
+}
+
+//Team for the User Join
+model Team {
+  id          String       @id @default(cuid())
+  noOfPlayer  Int
+  users       Profile[]
+  tournaments Tournament[]
+}
+
+model User {
+  id        String       @id @default(cuid())
+  username  String       @unique @db.VarChar(255)
+  password  String
+  email     String       @unique @db.VarChar(255)
+  managerIn OrgManager[]
+  orgJoin   Org[]
+  profile   Profile?
+  role      UserRole     @default(USER)
+}
+
+model UserGame {
+  name       Game    @relation(fields: [gameName], references: [gameName])
+  gameName   String  @unique
+  userGameId String  @unique
+  ign        Profile @relation(fields: [userIgn], references: [userId])
+  userIgn    String  @unique
 }
