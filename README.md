@@ -33,3 +33,10 @@ pnpm add nodemon
 <!-- USe the Express-rate-limiter to put the rate limit -->
 
 pnpm add express-rate-limit
+
+3. Implement CRUD for Related Core Models
+   • Start with Tournament (key domain entity).
+   • Then move to Game, Team, Org, and Profile.
+   • Why now? With users and auth done, you can assign relations, enforce permissions, and build your domain logic.
+
+Tournament are search on the basis of ORG, NAME, GAME, NoOfTeam, Empty or not
