@@ -138,6 +138,7 @@ exports.Prisma.OrgManagerScalarFieldEnum = {
 };
 
 exports.Prisma.ProfileScalarFieldEnum = {
+  id: 'id',
   userId: 'userId',
   userTeam: 'userTeam'
 };

@@ -4901,16 +4901,19 @@ export namespace Prisma {
   }
 
   export type ProfileMinAggregateOutputType = {
+    id: string | null
     userId: string | null
     userTeam: string | null
   }
 
   export type ProfileMaxAggregateOutputType = {
+    id: string | null
     userId: string | null
     userTeam: string | null
   }
 
   export type ProfileCountAggregateOutputType = {
+    id: number
     userId: number
     userTeam: number
     _all: number
@@ -4918,16 +4921,19 @@ export namespace Prisma {
 
 
   export type ProfileMinAggregateInputType = {
+    id?: true
     userId?: true
     userTeam?: true
   }
 
   export type ProfileMaxAggregateInputType = {
+    id?: true
     userId?: true
     userTeam?: true
   }
 
   export type ProfileCountAggregateInputType = {
+    id?: true
     userId?: true
     userTeam?: true
     _all?: true
@@ -5006,6 +5012,7 @@ export namespace Prisma {
   }
 
   export type ProfileGroupByOutputType = {
+    id: string
     userId: string
     userTeam: string
     _count: ProfileCountAggregateOutputType | null
@@ -5028,6 +5035,7 @@ export namespace Prisma {
 
 
   export type ProfileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
     userId?: boolean
     userTeam?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -5037,6 +5045,7 @@ export namespace Prisma {
   }, ExtArgs["result"]["profile"]>
 
   export type ProfileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
     userId?: boolean
     userTeam?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -5044,6 +5053,7 @@ export namespace Prisma {
   }, ExtArgs["result"]["profile"]>
 
   export type ProfileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
     userId?: boolean
     userTeam?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -5051,11 +5061,12 @@ export namespace Prisma {
   }, ExtArgs["result"]["profile"]>
 
   export type ProfileSelectScalar = {
+    id?: boolean
     userId?: boolean
     userTeam?: boolean
   }
 
-  export type ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "userTeam", ExtArgs["result"]["profile"]>
+  export type ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "userTeam", ExtArgs["result"]["profile"]>
   export type ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     gamePlay?: boolean | Profile$gamePlayArgs<ExtArgs>
@@ -5079,6 +5090,7 @@ export namespace Prisma {
       teams: Prisma.$TeamPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
+      id: string
       userId: string
       userTeam: string
     }, ExtArgs["result"]["profile"]>
@@ -5164,8 +5176,8 @@ export namespace Prisma {
      * // Get first 10 Profiles
      * const profiles = await prisma.profile.findMany({ take: 10 })
      * 
-     * // Only select the `userId`
-     * const profileWithUserIdOnly = await prisma.profile.findMany({ select: { userId: true } })
+     * // Only select the `id`
+     * const profileWithIdOnly = await prisma.profile.findMany({ select: { id: true } })
      * 
      */
     findMany<T extends ProfileFindManyArgs>(args?: SelectSubset<T, ProfileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -5209,9 +5221,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many Profiles and only return the `userId`
-     * const profileWithUserIdOnly = await prisma.profile.createManyAndReturn({
-     *   select: { userId: true },
+     * // Create many Profiles and only return the `id`
+     * const profileWithIdOnly = await prisma.profile.createManyAndReturn({
+     *   select: { id: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -5300,9 +5312,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Profiles and only return the `userId`
-     * const profileWithUserIdOnly = await prisma.profile.updateManyAndReturn({
-     *   select: { userId: true },
+     * // Update zero or more Profiles and only return the `id`
+     * const profileWithIdOnly = await prisma.profile.updateManyAndReturn({
+     *   select: { id: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5507,6 +5519,7 @@ export namespace Prisma {
    * Fields of the Profile model
    */
   interface ProfileFieldRefs {
+    readonly id: FieldRef<"Profile", 'String'>
     readonly userId: FieldRef<"Profile", 'String'>
     readonly userTeam: FieldRef<"Profile", 'String'>
   }
@@ -10355,6 +10368,7 @@ export namespace Prisma {
 
 
   export const ProfileScalarFieldEnum: {
+    id: 'id',
     userId: 'userId',
     userTeam: 'userTeam'
   };
@@ -10624,6 +10638,7 @@ export namespace Prisma {
     AND?: ProfileWhereInput | ProfileWhereInput[]
     OR?: ProfileWhereInput[]
     NOT?: ProfileWhereInput | ProfileWhereInput[]
+    id?: StringFilter<"Profile"> | string
     userId?: StringFilter<"Profile"> | string
     userTeam?: StringFilter<"Profile"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -10632,6 +10647,7 @@ export namespace Prisma {
   }
 
   export type ProfileOrderByWithRelationInput = {
+    id?: SortOrder
     userId?: SortOrder
     userTeam?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -10640,6 +10656,7 @@ export namespace Prisma {
   }
 
   export type ProfileWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
     userId?: string
     AND?: ProfileWhereInput | ProfileWhereInput[]
     OR?: ProfileWhereInput[]
@@ -10648,9 +10665,10 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     gamePlay?: UserGameListRelationFilter
     teams?: XOR<TeamScalarRelationFilter, TeamWhereInput>
-  }, "userId">
+  }, "id" | "userId">
 
   export type ProfileOrderByWithAggregationInput = {
+    id?: SortOrder
     userId?: SortOrder
     userTeam?: SortOrder
     _count?: ProfileCountOrderByAggregateInput
@@ -10662,6 +10680,7 @@ export namespace Prisma {
     AND?: ProfileScalarWhereWithAggregatesInput | ProfileScalarWhereWithAggregatesInput[]
     OR?: ProfileScalarWhereWithAggregatesInput[]
     NOT?: ProfileScalarWhereWithAggregatesInput | ProfileScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Profile"> | string
     userId?: StringWithAggregatesFilter<"Profile"> | string
     userTeam?: StringWithAggregatesFilter<"Profile"> | string
   }
@@ -11004,39 +11023,45 @@ export namespace Prisma {
   }
 
   export type ProfileCreateInput = {
+    id?: string
     user: UserCreateNestedOneWithoutProfileInput
     gamePlay?: UserGameCreateNestedManyWithoutIgnInput
     teams: TeamCreateNestedOneWithoutUsersInput
   }
 
   export type ProfileUncheckedCreateInput = {
+    id?: string
     userId: string
     userTeam: string
     gamePlay?: UserGameUncheckedCreateNestedManyWithoutIgnInput
   }
 
   export type ProfileUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneRequiredWithoutProfileNestedInput
     gamePlay?: UserGameUpdateManyWithoutIgnNestedInput
     teams?: TeamUpdateOneRequiredWithoutUsersNestedInput
   }
 
   export type ProfileUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     userTeam?: StringFieldUpdateOperationsInput | string
     gamePlay?: UserGameUncheckedUpdateManyWithoutIgnNestedInput
   }
 
   export type ProfileCreateManyInput = {
+    id?: string
     userId: string
     userTeam: string
   }
 
   export type ProfileUpdateManyMutationInput = {
-
+    id?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProfileUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     userTeam?: StringFieldUpdateOperationsInput | string
   }
@@ -11379,16 +11404,19 @@ export namespace Prisma {
   }
 
   export type ProfileCountOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     userTeam?: SortOrder
   }
 
   export type ProfileMaxOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     userTeam?: SortOrder
   }
 
   export type ProfileMinOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     userTeam?: SortOrder
   }
@@ -12700,11 +12728,13 @@ export namespace Prisma {
   }
 
   export type ProfileCreateWithoutTeamsInput = {
+    id?: string
     user: UserCreateNestedOneWithoutProfileInput
     gamePlay?: UserGameCreateNestedManyWithoutIgnInput
   }
 
   export type ProfileUncheckedCreateWithoutTeamsInput = {
+    id?: string
     userId: string
     gamePlay?: UserGameUncheckedCreateNestedManyWithoutIgnInput
   }
@@ -12758,6 +12788,7 @@ export namespace Prisma {
     AND?: ProfileScalarWhereInput | ProfileScalarWhereInput[]
     OR?: ProfileScalarWhereInput[]
     NOT?: ProfileScalarWhereInput | ProfileScalarWhereInput[]
+    id?: StringFilter<"Profile"> | string
     userId?: StringFilter<"Profile"> | string
     userTeam?: StringFilter<"Profile"> | string
   }
@@ -12821,11 +12852,13 @@ export namespace Prisma {
   }
 
   export type ProfileCreateWithoutUserInput = {
+    id?: string
     gamePlay?: UserGameCreateNestedManyWithoutIgnInput
     teams: TeamCreateNestedOneWithoutUsersInput
   }
 
   export type ProfileUncheckedCreateWithoutUserInput = {
+    id?: string
     userTeam: string
     gamePlay?: UserGameUncheckedCreateNestedManyWithoutIgnInput
   }
@@ -12888,11 +12921,13 @@ export namespace Prisma {
   }
 
   export type ProfileUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
     gamePlay?: UserGameUpdateManyWithoutIgnNestedInput
     teams?: TeamUpdateOneRequiredWithoutUsersNestedInput
   }
 
   export type ProfileUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
     userTeam?: StringFieldUpdateOperationsInput | string
     gamePlay?: UserGameUncheckedUpdateManyWithoutIgnNestedInput
   }
@@ -12915,11 +12950,13 @@ export namespace Prisma {
   }
 
   export type ProfileCreateWithoutGamePlayInput = {
+    id?: string
     user: UserCreateNestedOneWithoutProfileInput
     teams: TeamCreateNestedOneWithoutUsersInput
   }
 
   export type ProfileUncheckedCreateWithoutGamePlayInput = {
+    id?: string
     userId: string
     userTeam: string
   }
@@ -12964,11 +13001,13 @@ export namespace Prisma {
   }
 
   export type ProfileUpdateWithoutGamePlayInput = {
+    id?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneRequiredWithoutProfileNestedInput
     teams?: TeamUpdateOneRequiredWithoutUsersNestedInput
   }
 
   export type ProfileUncheckedUpdateWithoutGamePlayInput = {
+    id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     userTeam?: StringFieldUpdateOperationsInput | string
   }
@@ -13077,20 +13116,24 @@ export namespace Prisma {
   }
 
   export type ProfileCreateManyTeamsInput = {
+    id?: string
     userId: string
   }
 
   export type ProfileUpdateWithoutTeamsInput = {
+    id?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneRequiredWithoutProfileNestedInput
     gamePlay?: UserGameUpdateManyWithoutIgnNestedInput
   }
 
   export type ProfileUncheckedUpdateWithoutTeamsInput = {
+    id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     gamePlay?: UserGameUncheckedUpdateManyWithoutIgnNestedInput
   }
 
   export type ProfileUncheckedUpdateManyWithoutTeamsInput = {
+    id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
   }
 

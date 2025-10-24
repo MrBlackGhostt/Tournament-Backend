@@ -50,6 +50,7 @@ model OrgManager {
 }
 
 model Profile {
+  id String @id @default(cuid())
   user User @relation(fields: [userId], references: [id])
   userId String @unique
   gamePlay UserGame[]
@@ -57,7 +58,7 @@ model Profile {
   userTeam String 
 }
 
-// TOurnament that the user join & the Org Create
+// Tournament that the user join & the Org Create
 model Tournament {
   id String @id @default(cuid())
   noOfTeam Int
