@@ -40,6 +40,7 @@ adminId String @unique
 managers OrgManager[]
 orgTournament Tournament[]
 @@unique([id, name])
+@@index([id,name])
 }
 
 model OrgManager {
@@ -58,19 +59,27 @@ model Profile {
   gamePlay UserGame[]
   // teams Team @relation(fields: [userTeam] , references: [id])
   userTeam Team[] 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // Tournament that the user join & the Org Create
 model Tournament {
   id String @id @default(cuid())
+  tournamentName String?
   noOfTeam Int
   game Game @relation(fields: [gameName], references: [gameName])
   gameName String
   noOfPlayerInTeam Int
   teams Team[] 
-  org String?
+  orgId String?
   orgName String?
-  whichOrg Org? @relation(fields: [org,orgName], references: [id,name])
+  whichOrg Org? @relation(fields: [orgId,orgName], references: [id,name])
+  createdAt DateTime @default(now())
+  @@index([tournamentName])
+  @@index([gameName])
+  @@index([orgId, orgName])
+  @@index([noOfTeam])
 }
 
 //Team for the User Join
@@ -79,6 +88,8 @@ model Team {
   noOfPlayer Int
   users Profile[]
   tournaments Tournament[] 
+  createdAt DateTime @default(now())
+   updatedAt DateTime @updatedAt 
 }
 
 model User{
@@ -90,7 +101,8 @@ model User{
   orgJoin Org[]
   profile Profile?
   role UserRole @default(USER)
- 
+  createdAt         DateTime @default(now())
+  @@index([id,username])
 }
 
 model UserGame{

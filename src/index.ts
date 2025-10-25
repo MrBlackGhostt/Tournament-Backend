@@ -1,4 +1,4 @@
-import prisma from "./prisma-client.js";
+import { prisma } from "./lib/prisma-client.js";
 
 import Express from "express";
 import type { Request, Response, NextFunction } from "express";

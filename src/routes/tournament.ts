@@ -1,6 +1,10 @@
 import Express, { Router } from "express";
 import type {} from ".pnpm/@types+express-serve-static-core@5.0.7/node_modules/@types/express-serve-static-core";
-import { createTournament } from "../controller/tournament.controller.js";
+import {
+  createTournament,
+  searchTournaments,
+} from "../controller/tournament.controller.js";
+import { validateSearchQuery } from "../validators/tournament.validator.js";
 const router: Router = Express.Router();
 
 router.get("/", (req, res) => {
@@ -11,3 +15,5 @@ router.get("/", (req, res) => {
 
 router.post("/create", createTournament);
 export const TournamentRoute = router;
+
+router.get("/search", validateSearchQuery, searchTournaments);
