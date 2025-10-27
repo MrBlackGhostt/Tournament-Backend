@@ -76,6 +76,7 @@ model Tournament {
   orgName String?
   whichOrg Org? @relation(fields: [orgId,orgName], references: [id,name])
   createdAt DateTime @default(now())
+  updateAt DateTime @updatedAt
   @@index([tournamentName])
   @@index([gameName])
   @@index([orgId, orgName])

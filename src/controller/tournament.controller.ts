@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from "express";
 import * as tournamentService from "../services/tournament.service.js";
 
 import { success } from "zod";
+import { updateTournamentService } from "../services/tournament.service.js";
 
 export const createTournament = async (
   req: Request,
@@ -10,10 +11,11 @@ export const createTournament = async (
   next: NextFunction
 ) => {
   console.log("Creating the tournament");
-  const { noOfTeam, gameName, noOfPlayerInTeam } = req.body;
+  const { tournamentName, noOfTeam, gameName, noOfPlayerInTeam } = req.body;
   try {
     await prisma.tournament.create({
       data: {
+        tournamentName,
         noOfTeam,
         gameName,
         noOfPlayerInTeam,
@@ -95,5 +97,25 @@ export const searchTournaments = async (
       success: false,
       message: "Failed to search tournaments",
     });
+  }
+};
+
+export const updateTournament = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const updateTournament = await updateTournamentService(req.body);
+    console.log(
+      "🚀 ----------------------------------------------------------🚀"
+    );
+    console.log("🚀 ~ updateTournament ~ updateTournament:", updateTournament);
+    console.log(
+      "🚀 ----------------------------------------------------------🚀"
+    );
+  } catch (error) {
+    throw Error("Error in updatingthe tournament");
+    next(error);
   }
 };

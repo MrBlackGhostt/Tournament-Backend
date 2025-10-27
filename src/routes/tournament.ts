@@ -3,6 +3,7 @@ import type {} from ".pnpm/@types+express-serve-static-core@5.0.7/node_modules/@
 import {
   createTournament,
   searchTournaments,
+  updateTournament,
 } from "../controller/tournament.controller.js";
 import { validateSearchQuery } from "../validators/tournament.validator.js";
 const router: Router = Express.Router();
@@ -17,3 +18,5 @@ router.post("/create", createTournament);
 export const TournamentRoute = router;
 
 router.get("/search", validateSearchQuery, searchTournaments);
+
+router.put("/update/:tournamentid", updateTournament);

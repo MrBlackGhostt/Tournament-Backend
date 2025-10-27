@@ -1,5 +1,6 @@
+import { Prisma } from "@prisma/client";
 import { prisma } from "../lib/prisma-client.js";
-import type { SearchParams } from "../utils/type.js";
+import type { SearchParams, TournamentInterface } from "../utils/type.js";
 
 export const searchTournaments = async (params: SearchParams) => {
   const { tournamentName, gameName, orgName, orgId, page, limit } = params;
@@ -8,7 +9,7 @@ export const searchTournaments = async (params: SearchParams) => {
   if (tournamentName) {
     where.tournamentName = {
       contains: tournamentName,
-      mode: "insenstive",
+      // mode: "insenstive",
     };
   }
 
@@ -19,7 +20,7 @@ export const searchTournaments = async (params: SearchParams) => {
   if (orgName) {
     where.orgName = {
       contain: orgName,
-      mode: "insenstive",
+      // mode: "insenstive",
     };
   }
   if (orgId) {
@@ -52,4 +53,24 @@ export const searchTournaments = async (params: SearchParams) => {
       totalPage: Math.ceil(total / limit),
     },
   };
+};
+
+export const updateTournamentService = async (data: TournamentInterface) => {
+  try {
+    console.log(data);
+    const updateResult = await prisma.tournament.update({
+      where: {
+        id: data.id,
+      },
+      data: {
+        noOfPlayerInTeam: data.noOfPlayerInTeam || undefined,
+        noOfTeam: data.noOfTeam || undefined,
+        // teams: {
+        //   data : team[]
+        // },
+        tournamentName: data.tournamentName || undefined,
+        gameName: data.gameName || undefined,
+      },
+    });
+  } catch (error) {}
 };

@@ -18,3 +18,24 @@ export interface SearchParams {
   page: number;
   limit: number;
 }
+
+export interface TournamentInterface {
+  id: string;
+  tournamentName?: string;
+  noOfTeam?: number;
+  noOfPlayerInTeam?: number;
+  gameName?: string;
+  // orgName?: string;
+  // orgId?: string;
+  // teams?: Team[];
+}
+
+export interface Team {
+  id: string;
+  user: Profile[];
+}
+
+export interface Profile {
+  id: string;
+  userId: string;
+}
