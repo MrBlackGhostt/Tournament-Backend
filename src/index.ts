@@ -15,6 +15,7 @@ import { speedLimiter } from "./middleware/slowDown.js";
 import { authMiddleware } from "./middleware/user.js";
 //Routes
 import { TournamentRoute } from "./routes/tournament.js";
+import { router as ProfileRoute } from "./routes/profile.js";
 
 const app = Express();
 // const prisma = new PrismaClient();
@@ -31,7 +32,11 @@ app.use(Express.json());
 
 //Auth middleware
 // app.use(authMiddleware);
+
+// Routes for Profile
+app.use("/profile", ProfileRoute);
 //Routes for the Tournament
+
 app.use("/tournament", TournamentRoute);
 
 app.get("/", async (req: Request, res: Response) => {

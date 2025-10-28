@@ -54,13 +54,16 @@ model OrgManager {
 
 model Profile {
   id String @id @default(cuid())
-  user User @relation(fields: [userId], references: [id])
-  userId String @unique
+  userName String 
+  userId String 
+  user User @relation(fields: [userId,userName], references: [id,username])
   gamePlay UserGame[]
-  // teams Team @relation(fields: [userTeam] , references: [id])
+
   userTeam Team[] 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  @@unique([userId, userName])
+  @@index([userName])
 }
 
 // Tournament that the user join & the Org Create
@@ -104,6 +107,7 @@ model User{
   role UserRole @default(USER)
   createdAt         DateTime @default(now())
   @@index([id,username])
+  @@unique([username, id])
 }
 
 model UserGame{

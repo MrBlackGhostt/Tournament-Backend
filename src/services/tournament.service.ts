@@ -58,19 +58,19 @@ export const searchTournaments = async (params: SearchParams) => {
 export const updateTournamentService = async (data: TournamentInterface) => {
   try {
     console.log(data);
-    const updateResult = await prisma.tournament.update({
-      where: {
-        id: data.id,
-      },
-      data: {
-        noOfPlayerInTeam: data.noOfPlayerInTeam || undefined,
-        noOfTeam: data.noOfTeam || undefined,
-        // teams: {
-        //   data : team[]
-        // },
-        tournamentName: data.tournamentName || undefined,
-        gameName: data.gameName || undefined,
-      },
-    });
+    // const updateResult = await prisma.tournament.update({
+    //   where: {
+    //     id: data.id,
+    //   },
+    //   data: {
+    //     noOfPlayerInTeam: data.noOfPlayerInTeam || undefined,
+    //     noOfTeam: data.noOfTeam || undefined,
+    //     // // teams: {
+    //     // //   data : team[]
+    //     // // },
+    //     // tournamentName: data.tournamentName || undefined,
+    //     // gameName: data.gameName || undefined,
+    //   },
+    // });
   } catch (error) {}
 };
