@@ -1,5 +1,6 @@
-import type { Response, Request, NextFunction } from "express";
+import { type Response, type Request, type NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import { prisma } from "../lib/prisma-client.js";
 
 export const authMiddleware = async (
   req: Request,
@@ -33,3 +34,30 @@ export const authMiddleware = async (
     }
   }
 };
+
+const userIdCheck = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id = req.params.userId;
+    console.log("INSIDE THE USERIDCHECK");
+    const result = await prisma.user.findUnique({
+      where: {
+        id: id as string,
+      },
+      select: {
+        username: true,
+        email: true,
+      },
+    });
+    console.log("RESULT ", result);
+    req.body = { ...req.body, user: result };
+    console.log("User inside teh req", req.body.user);
+    next();
+  } catch (error) {
+    next({
+      staus: 500,
+      message: "User of this id not present",
+    });
+  }
+};
+
+export { userIdCheck };

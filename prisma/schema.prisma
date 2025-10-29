@@ -55,7 +55,7 @@ model OrgManager {
 model Profile {
   id String @id @default(cuid())
   userName String 
-  userId String 
+  userId String @unique 
   user User @relation(fields: [userId,userName], references: [id,username])
   gamePlay UserGame[]
 
@@ -79,7 +79,7 @@ model Tournament {
   orgName String?
   whichOrg Org? @relation(fields: [orgId,orgName], references: [id,name])
   createdAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  updateAt DateTime @updatedAt  @default(now())
   @@index([tournamentName])
   @@index([gameName])
   @@index([orgId, orgName])
@@ -106,14 +106,17 @@ model User{
   profile Profile?
   role UserRole @default(USER)
   createdAt         DateTime @default(now())
+  updatedAt DateTime @updatedAt  @default(now())
   @@index([id,username])
   @@unique([username, id])
 }
 
 model UserGame{
   name Game @relation(fields: [gameName], references: [gameName])
-  gameName String @unique
-  userGameId String @unique
-  ign Profile @relation(fields: [userIgn], references: [userId])
-  userIgn String @unique
+  gameName String 
+
+  userGameId String 
+  profile Profile @relation(fields: [profileId], references: [id])
+  profileId String
+  @@unique([gameName, userGameId])
 }
