@@ -60,4 +60,30 @@ const userIdCheck = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { userIdCheck };
+const profileIdCheck = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = req.params.profileId;
+    const userId = req.params.userId;
+    console.log("INSIDE THE PROFILEIDCHECK");
+    const result = await prisma.profile.findUnique({
+      where: {
+        userId: userId as string,
+      },
+    });
+    console.log("RESULT ", result);
+    req.body = { ...req.body, profile: result };
+    console.log("Profile inside teh req", req.body);
+    next();
+  } catch (error) {
+    next({
+      staus: 500,
+      message: "Profile of this id not present",
+    });
+  }
+};
+
+export { userIdCheck, profileIdCheck };

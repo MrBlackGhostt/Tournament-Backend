@@ -2,21 +2,25 @@ import type { NextFunction, Request, Response } from "express";
 import z, { email } from "zod";
 
 const profileDataCheck = z.object({
-  gamePlay: z.array(
-    z.object({
-      gameName: z.string().optional(),
-      userGameId: z.string().optional(),
-    })
-  ),
-  userTeam: z.array(
-    z.object({
-      noOfPlayer: z.number().int().nonnegative().max(4).optional(),
-      user: {
-        username: z.string().optional(),
-        email: z.email().optional(),
-      },
-    })
-  ),
+  gamePlay: z
+    .array(
+      z.object({
+        gameName: z.string().optional(),
+        userGameId: z.string().optional(),
+      })
+    )
+    .optional(),
+  userTeam: z
+    .array(
+      z.object({
+        noOfPlayer: z.number().int().nonnegative().max(4).optional(),
+        user: {
+          username: z.string().optional(),
+          email: z.email().optional(),
+        },
+      })
+    )
+    .optional(),
 });
 
 const userDataCheck = z.object({
