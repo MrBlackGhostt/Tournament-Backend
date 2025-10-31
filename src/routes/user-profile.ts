@@ -7,7 +7,11 @@ import { profileIdCheck, userIdCheck } from "../middleware/user.js";
 import {
   profileCreateController,
   profilePatchController,
+  userGameController,
+  userTeamCreateController,
 } from "../controller/profile.controller.js";
+import { teamRoute } from "./teamRoute.js";
+import { userGameRoute } from "./userGameRoute.js";
 
 export const router: Router = Express.Router();
 
@@ -20,3 +24,9 @@ router.patch(
   profileValidator,
   profilePatchController
 );
+
+// UserGame Route
+
+router.use("/myGame", userGameRoute);
+
+router.use("/:profileId/myteam", teamRoute);

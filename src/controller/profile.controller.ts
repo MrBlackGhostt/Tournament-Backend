@@ -39,13 +39,37 @@ const profilePatchController = async (
   next: NextFunction
 ) => {
   try {
-    console.log("DATA SENDING", req.body);
+    console.log("DATA RECEIVED", req.body);
     const userId = req.params.userId;
-    // const { gamePlay, userTeam } = req.body;
+    const { gamePlay, userTeam } = req.body;
+
+    const updateData: any = {}; // Build dynamically
+
+    // Handle gamePlay: validate and prepare nested create
+    // if (gamePlay) {
+    //   const validateGames = Array.isArray(gamePlay)
+    //     ? gamePlay.map((game: { gameName: string; userGameId: string }) => ({
+    //         gameName: game.gameName,
+    //         userGameId: game.userGameId,
+    //       }))
+    //     : [
+    //         {
+    //           gameName: gamePlay.gameName,
+    //           userGameId: gamePlay.userGameId,
+    //         },
+    //       ];
+    // if (validateGames.length > 0)
+    //       //             userGameId: game.userGameId,})))
+    //     }
+
+    //     if (gamePlay) updateProfileData.gamePlay = gamePlay;
+    //     if (userTeam) updateProfileData.userTeam = userTeam;
+
     const result = await prisma.profile.update({
       where: {
         userId: userId as string, // Valid since @unique
       },
+      // updateProfileData,
       data: {
         gamePlay: {
           create: Array.isArray(req.body.gamePlay)
@@ -74,12 +98,85 @@ const profilePatchController = async (
     console.log("🚀 --------------------------------------------🚀");
 
     res.status(200).json({
-      data: result,
-      message: "Profile is created",
+      result,
+      message:
+        Object.keys(updateData).length > 0
+          ? "Profile updated successfully"
+          : "Profile unchanged",
     });
   } catch (error) {
-    throw Error("Error in UPdating the profile");
+    console.error("Update Error:", error); // Log details for debugging
+    next(error); // Pass to middleware instead of throwing generic
   }
 };
 
-export { profileCreateController, profilePatchController };
+const userGameController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { gameName, userGameId } = req.body;
+  const profileId = req.params.profileId;
+  try {
+    const result = await prisma.userGame.create({
+      data: {
+        gameName: gameName as string,
+        userGameId: userGameId as string,
+        profileId: profileId as string,
+      },
+    });
+    console.log("🚀 ----------------------------------------🚀");
+    console.log("🚀 ~ userGameController ~ result:", result);
+    console.log("🚀 ----------------------------------------🚀");
+
+    res.status(200).json({
+      status: "complete",
+      message: "userGame is added",
+      data: result,
+    });
+  } catch (error) {
+    throw Error("Error while adding the userGame");
+  }
+};
+
+const userTeamCreateController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { noOfPlayer } = req.body;
+  console.log("🚀 ------------------------------------------------------🚀");
+  console.log("🚀 ~ userTeamCreateController ~ noOfPlayer:", noOfPlayer);
+  console.log("🚀 ------------------------------------------------------🚀");
+  const profileId = req.params.profileId;
+  try {
+    const result = await prisma.team.create({
+      data: {
+        noOfPlayer: noOfPlayer,
+        users: {
+          connect: {
+            id: profileId as string,
+          },
+        },
+      },
+    });
+    console.log("🚀 ----------------------------------------🚀");
+    console.log("🚀 ~ userGameController ~ result:", result);
+    console.log("🚀 ----------------------------------------🚀");
+
+    res.status(200).json({
+      status: "complete",
+      message: "userTeam is created",
+      data: result,
+    });
+  } catch (error) {
+    throw Error("Error while creating the team");
+  }
+};
+
+export {
+  profileCreateController,
+  profilePatchController,
+  userGameController,
+  userTeamCreateController,
+};

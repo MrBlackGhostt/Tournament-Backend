@@ -67,11 +67,11 @@ const profileIdCheck = async (
 ) => {
   try {
     const id = req.params.profileId;
-    const userId = req.params.userId;
+
     console.log("INSIDE THE PROFILEIDCHECK");
     const result = await prisma.profile.findUnique({
       where: {
-        userId: userId as string,
+        id: id as string,
       },
     });
     console.log("RESULT ", result);
