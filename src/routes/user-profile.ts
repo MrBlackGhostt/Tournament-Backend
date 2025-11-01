@@ -29,4 +29,4 @@ router.patch(
 
 router.use("/myGame", userGameRoute);
 
-router.use("/:profileId/myteam", teamRoute);
+router.use("/:profileId/myteam", profileIdCheck, teamRoute);

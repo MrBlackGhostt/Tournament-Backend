@@ -1,7 +1,11 @@
 import Express, { Router } from "express";
 import { profileIdCheck } from "../middleware/user.js";
 import { userTeamCreateController } from "../controller/profile.controller.js";
-import { addTeammateController } from "../controller/userTeam.controller.js";
+import {
+  addTeammateController,
+  leaveTeamController,
+} from "../controller/userTeam.controller.js";
+import { teamIdVerify } from "../middleware/team_game.middileware.js";
 
 const router: Router = Router();
 
@@ -18,5 +22,10 @@ router.post(
 
 // add user to the team OR Invite other user
 router.patch("/add_teammate/:teamId", addTeammateController);
+interface teamReqInterface {
+  teamId: string;
+  profileId: string;
+}
+router.patch("/leave_team/:teamId", teamIdVerify, leaveTeamController);
 
 export { router as teamRoute };

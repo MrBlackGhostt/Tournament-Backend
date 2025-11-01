@@ -1,5 +1,10 @@
-import type { Request, Response, NextFunction } from "express";
+import type { RequestHandler, Request, Response, NextFunction } from "express";
 import { prisma } from "../lib/prisma-client.js";
+
+// interface teamReqInterface {
+//   teamId: string;
+//   profileId: string;
+// }
 
 const addTeammateController = async (
   req: Request,
@@ -53,9 +58,45 @@ const addTeammateController = async (
       return res.status(404).json({ ok: false, error: "Team not found" });
     }
 
-    // 6. Pass unknown errors to the global error handler
+    // 6. Pass unknown errors to the global error handle
     return next(err);
   }
 };
 
-export { addTeammateController };
+// User want to leave the team
+const leaveTeamController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const teamId = req.params.teamId as string;
+  const profileId = req.params.profileId as string;
+  try {
+    const result = await prisma.team.update({
+      where: {
+        id: teamId,
+      },
+      data: {
+        users: {
+          disconnect: { id: profileId },
+        },
+      },
+    });
+    console.log("🚀 -----------------------------------------🚀");
+    console.log("🚀 ~ leaveTeamController ~ result:", result);
+    console.log("🚀 -----------------------------------------🚀");
+    res.status(200).json({
+      status: "complete",
+      message: "User Remove from the team",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "Failed",
+      message:
+        "Something Went wrong while Removing the user form the team TRY AGAIN!!!",
+    });
+  }
+};
+
+export { addTeammateController, leaveTeamController };
